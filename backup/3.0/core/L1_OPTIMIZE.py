@@ -1,9 +1,7 @@
-# core\L1_OPTIMIZE.py
-
 import os
-import shutil
 import requests
 import logging
+from core.move import move_folder, delete_empty_folders  # 引入 delete_empty_folders 函数
 
 def fetch_recording_status():
     """
@@ -21,20 +19,6 @@ def fetch_recording_status():
     except requests.exceptions.RequestException as e:
         logging.debug(f"[L1][API] 请求API失败: {e}")
         return {}
-
-def ensure_directory_exists(directory_path):
-    """
-    确保目录存在，如果不存在则创建。
-
-    参数:
-        directory_path (str): 目录路径。
-    """
-    if not os.path.exists(directory_path):
-        try:
-            os.makedirs(directory_path)
-            logging.debug(f"[L1][目录] 创建目标目录: {directory_path}")
-        except Exception as e:
-            logging.debug(f"[L1][目录] 创建目录 {directory_path} 失败: {e}")
 
 def move_folders(folder_path_id, enable_move):
     """
@@ -66,7 +50,12 @@ def move_folders(folder_path_id, enable_move):
         target_directory = paths["target"]
 
         # 确保目标目录存在
-        ensure_directory_exists(target_directory)
+        if not os.path.exists(target_directory):
+            try:
+                os.makedirs(target_directory)
+                logging.debug(f"[L1][目录检查] 创建目标目录: {target_directory}")
+            except Exception as e:
+                logging.debug(f"[L1][目录检查] 创建目录 {target_directory} 失败: {e}")
 
         try:
             total_folders[folder_id] = len([item for item in os.listdir(source_directory) if os.path.isdir(os.path.join(source_directory, item))])
@@ -90,36 +79,16 @@ def move_folders(folder_path_id, enable_move):
                 logging.debug(f"[L1][移动] 用户文件夹 {folder_name} 正在直播或者录制中，跳过移动")
                 continue
 
-            if not os.path.exists(target_folder_path):
-                try:
-                    shutil.move(source_folder_path, target_folder_path)
-                    logging.debug(f"[L1][移动] 已成功移动文件夹 {folder_name} 到 {target_directory}")
-                    moved_folders[folder_id] += 1
-                except Exception as e:
-                    logging.debug(f"[L1][移动] 移动文件夹 {folder_name} 到 {target_folder_path} 失败: {e}")
-                    failed_folders[folder_id] += 1
-                    failed_folder_names[folder_id].append(folder_name)
-            else:
-                try:
-                    for item in os.listdir(source_folder_path):
-                        shutil.move(os.path.join(source_folder_path, item), target_folder_path)
-                    os.rmdir(source_folder_path)
-                    logging.debug(f"[L1][移动] 已合并文件夹 {folder_name} 到 {target_directory}")
-                    moved_folders[folder_id] += 1
-                except Exception as e:
-                    logging.debug(f"[L1][移动] 合并文件夹 {folder_name} 失败: {e}")
-                    failed_folders[folder_id] += 1
-                    failed_folder_names[folder_id].append(folder_name)
+            try:
+                move_folder(source_folder_path, target_folder_path, enable_move)
+                moved_folders[folder_id] += 1
+            except Exception as e:
+                logging.debug(f"[L1][移动] 移动或合并文件夹 {folder_name} 失败: {e}")
+                failed_folders[folder_id] += 1
+                failed_folder_names[folder_id].append(folder_name)
 
-    # 删除空的用户文件夹
+    # 删除空文件夹
     for paths in folder_path_id.values():
-        source_directory = paths["source"]
-        try:
-            for folder_name in os.listdir(source_directory):
-                folder_path = os.path.join(source_directory, folder_name)
-                if os.path.isdir(folder_path) and not os.listdir(folder_path):
-                    os.rmdir(folder_path)
-        except FileNotFoundError:
-            continue
+        delete_empty_folders(paths["source"])
 
     return total_folders, moved_folders, failed_folders, failed_folder_names

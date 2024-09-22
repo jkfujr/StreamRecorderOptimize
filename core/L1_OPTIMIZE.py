@@ -20,20 +20,6 @@ def fetch_recording_status():
         logging.debug(f"[L1][API] 请求API失败: {e}")
         return {}
 
-def ensure_directory_exists(directory_path):
-    """
-    确保目录存在，如果不存在则创建。
-
-    参数:
-        directory_path (str): 目录路径。
-    """
-    if not os.path.exists(directory_path):
-        try:
-            os.makedirs(directory_path)
-            logging.debug(f"[L1][目录] 创建目标目录: {directory_path}")
-        except Exception as e:
-            logging.debug(f"[L1][目录] 创建目录 {directory_path} 失败: {e}")
-
 def move_folders(folder_path_id, enable_move):
     """
     移动和合并文件夹。
@@ -64,7 +50,12 @@ def move_folders(folder_path_id, enable_move):
         target_directory = paths["target"]
 
         # 确保目标目录存在
-        ensure_directory_exists(target_directory)
+        if not os.path.exists(target_directory):
+            try:
+                os.makedirs(target_directory)
+                logging.debug(f"[L1][目录检查] 创建目标目录: {target_directory}")
+            except Exception as e:
+                logging.debug(f"[L1][目录检查] 创建目录 {target_directory} 失败: {e}")
 
         try:
             total_folders[folder_id] = len([item for item in os.listdir(source_directory) if os.path.isdir(os.path.join(source_directory, item))])

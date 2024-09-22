@@ -78,13 +78,12 @@ class BLREC:
             except Exception as e:
                 logging.error(f"[L2][BLREC] 文件移动失败：{source_file} -> {target_file}, 错误：{e}")
 
-    def merge_folders(self, L2_OPTIMIZE_GLOBAL_PATH, L2_OPTIMIZE_GLOBAL_MOVE, L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS, L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS):
+    def merge_folders(self, L2_OPTIMIZE_GLOBAL_PATH, L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS, L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS):
         """
         合并符合条件的文件夹。
 
         参数:
             L2_OPTIMIZE_GLOBAL_PATH (dict): 文件夹路径映射。
-            L2_OPTIMIZE_GLOBAL_MOVE (bool): 是否启用移动操作。
             L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS (list): 社团文件夹列表。
             L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS (list): 需要跳过的文件夹列表。
         """
@@ -131,17 +130,16 @@ class BLREC:
                 if not merge_completed:
                     break
 
-    def blrec_main(self, L2_OPTIMIZE_GLOBAL_PATH, L2_OPTIMIZE_GLOBAL_MOVE, L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS, L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS):
+    def blrec_main(self, L2_OPTIMIZE_GLOBAL_PATH, L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS, L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS):
         """
         BLREC 主函数，执行文件夹合并操作。
 
         参数:
             L2_OPTIMIZE_GLOBAL_PATH (dict): 文件夹路径映射。
-            L2_OPTIMIZE_GLOBAL_MOVE (bool): 是否启用移动操作。
             L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS (list): 社团文件夹列表。
             L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS (list): 需要跳过的文件夹列表。
         """
-        self.merge_folders(L2_OPTIMIZE_GLOBAL_PATH, L2_OPTIMIZE_GLOBAL_MOVE, L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS, L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS)
+        self.merge_folders(L2_OPTIMIZE_GLOBAL_PATH, L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS, L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS)
 
 
 class RECHEME:
@@ -369,33 +367,6 @@ class RECHEME:
 
         logging.debug(f"[L2][录播姬] 合并逻辑处理完成，用户文件夹：{user_folder}")
         return False
-
-    def merge_folders_logic(self, main_folder, folders_to_merge, L2_OPTIMIZE_RECHEME_SKIP_KEY):
-        """
-        合并多个文件夹到主文件夹，封装 BLREC 的 merge_folders 方法。
-
-        参数:
-            main_folder (str): 主文件夹路径。
-            folders_to_merge (list): 需要合并的文件夹列表。
-            L2_OPTIMIZE_RECHEME_SKIP_KEY (list): 需要跳过的子字符串列表。
-        """
-        if not folders_to_merge:
-            logging.warning(f"[L2][录播姬] 未找到可合并的文件夹: {main_folder}")
-            return
-
-        logging.debug(f"[L2][录播姬] 合并文件夹: {main_folder} <- {folders_to_merge}")
-        for folder in folders_to_merge:
-            if any(substring in folder for substring in L2_OPTIMIZE_RECHEME_SKIP_KEY):
-                logging.debug(f"[L2][录播姬] 跳过文件夹：{folder}")
-                continue
-
-            for item in os.listdir(folder):
-                item_path = os.path.join(folder, item)
-                target_item_path = os.path.join(main_folder, item)
-                logging.debug(f"[L2][录播姬] 将 {item_path} 移动到 {target_item_path}")
-                move_folder(item_path, target_item_path)
-
-            os.rmdir(folder)
 
     def recheme_main(
         self, L2_OPTIMIZE_GLOBAL_PATH, L2_OPTIMIZE_GLOBAL_MOVE, L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS, L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS, L2_OPTIMIZE_RECHEME_SKIP_KEY
