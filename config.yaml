@@ -1,0 +1,91 @@
+# 录播API
+REC_API:
+  url: "http://127.0.0.1:11111/api/data"
+
+
+# 定时运行时间
+TASK_SCHEDULER_TIMES:
+  - "00:00"
+  - "02:00"
+  - "04:00"
+  - "06:00"
+  - "08:00"
+  - "10:00"
+  - "12:00"
+  - "14:00"
+  - "16:00"
+  - "18:00"
+  - "20:00"
+  - "22:00"
+
+# 录播移动路径
+REC_PATH:
+
+  # 1级优化
+  L1_OPTIMIZE:
+    # 是否启用1级优化
+    ## 默认 false
+    ENABLE: true
+    # 是否启用移动
+    ## 默认 false
+    MOVE: true
+    PATH:
+      # 名称(自定义)
+      AAA:
+        source: "F:\\Video\\录播\\综合"
+        target: "F:\\Video\\AAAAAAAAAA"
+      PPP:
+        source: "F:\\Video\\录播\\P家"
+        target: "F:\\Video\\PPPPPPPPPP"
+  # 2级优化
+  L2_OPTIMIZE:
+    # 是否启用2级优化
+    ## 默认 false
+    ENABLE: true
+    # 是否启用移动
+    ## 默认 false
+    MOVE: true
+    PATH:
+      # 名称(自定义)
+      AAA:
+        source: "F:\\Video\\AAAAAAAAAA"
+        target: "F:\\Video\\AAAAAAAAAA\\综合"
+      PPP:
+        source: "F:\\Video\\PPPPPPPPPP"
+        target: "F:\\Video\\PPPPPPPPPP\\P家"
+
+# 根目录需要跳过
+SKIP_FOLDERS:
+  # 需要跳过的关键词
+  SKIP_KEY:
+    - "000"
+    - "111"
+    - "222"
+    - "333"
+    - "444"
+
+# 社团文件夹
+SOCIAL_FOLDERS:
+  - "NIJISANJI"
+  - "HOLOLIVE"
+  - "VSPO"
+
+# 用户文件夹-子文件夹
+RECHEME_USER_FOLDERS:
+  # 需要跳过的关键词
+  SKIP_KEY:
+    - "【blrec-flv】"
+    - "【blrec-hls】"
+    - "000_部分丢失"
+    - "1970"
+
+
+# 推送相关
+PUSH:
+  # GOTIFY推送(可选)
+  GOTIFY:
+    # 是否启用
+    ## 默认false
+    enable: true
+    url: "http://1.1.1.1:19191"
+    token: "114514"

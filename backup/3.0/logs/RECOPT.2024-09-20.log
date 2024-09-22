@@ -1,0 +1,558 @@
+2024-09-20 20:49:08,868 [INFO] MainProcess - 程序开始运行
+2024-09-20 20:49:08,868 [INFO] MainProcess - [Run] 开始 L1 移动操作
+2024-09-20 20:49:08,870 [DEBUG] MainProcess - Starting new HTTP connection (1): 127.0.0.1:11111
+2024-09-20 20:49:09,250 [DEBUG] MainProcess - http://127.0.0.1:11111 "GET /api/data HTTP/1.1" 200 728133
+2024-09-20 20:49:09,267 [DEBUG] MainProcess - [L1][移动] 开始移动录播文件
+2024-09-20 20:49:09,268 [DEBUG] MainProcess - [L1][移动] 开始处理目标路径 F:\Video\AAAAAAAAAA, 总共有 35 个文件夹
+2024-09-20 20:49:09,268 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 AlternativeLilas
+2024-09-20 20:49:09,268 [DEBUG] MainProcess - [L1][移动] 用户文件夹 AlternativeLilas 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,268 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 HiiroVTuber
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 已合并文件夹 HiiroVTuber 到 F:\Video\AAAAAAAAAA
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 Hoshimi_Yume
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 用户文件夹 Hoshimi_Yume 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 NoWorld_Official
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 用户文件夹 NoWorld_Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 伊崎绫香公式
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 用户文件夹 伊崎绫香公式 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 八鏡mira
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 用户文件夹 八鏡mira 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 千郁郁sen
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 用户文件夹 千郁郁sen 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 咪菈Mira
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 用户文件夹 咪菈Mira 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 咲花なる
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 用户文件夹 咲花なる 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 塔克Tako
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 用户文件夹 塔克Tako 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 大藏优介-Official
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 用户文件夹 大藏优介-Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,269 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 天球拿铁AmedamaLatte
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 用户文件夹 天球拿铁AmedamaLatte 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 奇屋敷森森_Official
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 用户文件夹 奇屋敷森森_Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 奈落米拉米
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 用户文件夹 奈落米拉米 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 小柔Channel
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 用户文件夹 小柔Channel 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 布朗什初花_Blanche
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 用户文件夹 布朗什初花_Blanche 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 心羽萝妮Official
+2024-09-20 20:49:09,270 [DEBUG] MainProcess - [L1][移动] 用户文件夹 心羽萝妮Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 明前奶绿
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 明前奶绿 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 星期四Thurz
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 星期四Thurz 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 星野爱丽丝Vup
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 星野爱丽丝Vup 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 月百合kira_Official
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 月百合kira_Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 椎田Tsugumi
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 椎田Tsugumi 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 烤鱼子Official
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 烤鱼子Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 熊野Mina_official
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 熊野Mina_official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 狮子神蕾欧娜_official
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 狮子神蕾欧娜_official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 猫雷NyaRu_Official
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 猫雷NyaRu_Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 甘井羽衣_Official
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 甘井羽衣_Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 疾风Haya_Official
+2024-09-20 20:49:09,271 [DEBUG] MainProcess - [L1][移动] 用户文件夹 疾风Haya_Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 真咲樱_Official
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 用户文件夹 真咲樱_Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 真红莉爱official
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 用户文件夹 真红莉爱official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 真面目喵露_Official
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 用户文件夹 真面目喵露_Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 賴城来拉_LairaRaijo
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 用户文件夹 賴城来拉_LairaRaijo 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 钉宫妮妮Ninico
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 用户文件夹 钉宫妮妮Ninico 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 鬼霧シアン_Official
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 用户文件夹 鬼霧シアン_Official 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 鶴河咲雪Vtuber
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 用户文件夹 鶴河咲雪Vtuber 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 开始处理目标路径 F:\Video\PPPPPPPPPP, 总共有 1 个文件夹
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 猫宫心爱
+2024-09-20 20:49:09,272 [DEBUG] MainProcess - [L1][移动] 用户文件夹 猫宫心爱 正在直播或者录制中，跳过移动
+2024-09-20 20:49:09,274 [INFO] MainProcess - [Run] 完成 L1 移动操作
+2024-09-20 20:49:09,274 [INFO] MainProcess - [Run] 开始 L2 优化操作
+2024-09-20 20:49:09,275 [INFO] MainProcess - [BLREC] 开始处理
+2024-09-20 20:49:09,275 [DEBUG] MainProcess - [BLREC] 开始合并文件夹
+2024-09-20 20:49:09,291 [INFO] MainProcess - [BLREC] 处理完成
+2024-09-20 20:49:09,291 [INFO] MainProcess - [录播姬] 开始处理
+2024-09-20 20:49:09,291 [INFO] MainProcess - [L2][录播姬] 开始处理源路径: F:\Video\AAAAAAAAAA
+2024-09-20 20:49:09,291 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\Caramel_奶糖
+2024-09-20 20:49:09,291 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: Caramel_奶糖
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: Caramel_奶糖
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\CuteGabu
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: CuteGabu
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: CuteGabu
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\HiiroVTuber
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: HiiroVTuber
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: HiiroVTuber
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\Milky_Vtuber
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: Milky_Vtuber
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: Milky_Vtuber
+2024-09-20 20:49:09,292 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\Mujifa-天仙
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: Mujifa-天仙
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: Mujifa-天仙
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\Tacitly_Official
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: Tacitly_Official
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: Tacitly_Official
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\咲花なる
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 咲花なる
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 咲花なる
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\喇叭花姐姐ー天仙
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 喇叭花姐姐ー天仙
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 喇叭花姐姐ー天仙
+2024-09-20 20:49:09,293 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\塔克Tako
+2024-09-20 20:49:09,294 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 塔克Tako
+2024-09-20 20:49:09,294 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 塔克Tako
+2024-09-20 20:49:09,294 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\天曰小雏Official
+2024-09-20 20:49:09,294 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 天曰小雏Official
+2024-09-20 20:49:09,294 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 天曰小雏Official
+2024-09-20 20:49:09,294 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\奈落米拉米
+2024-09-20 20:49:09,294 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 奈落米拉米
+2024-09-20 20:49:09,294 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 奈落米拉米
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\小搞_official
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 小搞_official
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 小搞_official
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\小豆沢あずきofficial
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 小豆沢あずきofficial
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 小豆沢あずきofficial
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\居眠ネム_Nemu
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 居眠ネム_Nemu
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 居眠ネム_Nemu
+2024-09-20 20:49:09,295 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\山椒阿露波Arpa
+2024-09-20 20:49:09,296 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 山椒阿露波Arpa
+2024-09-20 20:49:09,296 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 山椒阿露波Arpa
+2024-09-20 20:49:09,296 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\帕妃Pafi
+2024-09-20 20:49:09,296 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 帕妃Pafi
+2024-09-20 20:49:09,296 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 帕妃Pafi
+2024-09-20 20:49:09,296 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\心羽萝妮Official
+2024-09-20 20:49:09,296 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 心羽萝妮Official
+2024-09-20 20:49:09,297 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 心羽萝妮Official
+2024-09-20 20:49:09,297 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\星宮汐Official
+2024-09-20 20:49:09,297 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 星宮汐Official
+2024-09-20 20:49:09,297 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 星宮汐Official
+2024-09-20 20:49:09,297 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\正直少年李发卡
+2024-09-20 20:49:09,297 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 正直少年李发卡
+2024-09-20 20:49:09,297 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 正直少年李发卡
+2024-09-20 20:49:09,297 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\片桐秋_Official
+2024-09-20 20:49:09,297 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 片桐秋_Official
+2024-09-20 20:49:09,298 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 片桐秋_Official
+2024-09-20 20:49:09,299 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\猫雷NyaRu_Official
+2024-09-20 20:49:09,299 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 猫雷NyaRu_Official
+2024-09-20 20:49:09,299 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 猫雷NyaRu_Official
+2024-09-20 20:49:09,299 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\磯辺もち-矶边饼
+2024-09-20 20:49:09,299 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 磯辺もち-矶边饼
+2024-09-20 20:49:09,299 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 磯辺もち-矶边饼
+2024-09-20 20:49:09,299 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\综合
+2024-09-20 20:49:09,299 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 综合
+2024-09-20 20:49:09,299 [ERROR] MainProcess - [L2][录播姬] 无法将目录 'F:\Video\AAAAAAAAAA\综合' 移动到其子目录 'F:\Video\AAAAAAAAAA\综合\综合'，操作被跳过。
+2024-09-20 20:49:09,299 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\花音-Hanon
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 花音-Hanon
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 花音-Hanon
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\転生子餅
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 転生子餅
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 転生子餅
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 开始处理源路径: F:\Video\PPPPPPPPPP
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\P家
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: P家
+2024-09-20 20:49:09,300 [ERROR] MainProcess - [L2][录播姬] 无法将目录 'F:\Video\PPPPPPPPPP\P家' 移动到其子目录 'F:\Video\PPPPPPPPPP\P家\P家'，操作被跳过。
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\召唤师yami
+2024-09-20 20:49:09,300 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 召唤师yami
+2024-09-20 20:49:09,301 [INFO] MainProcess - [move] 移动文件：F:\Video\PPPPPPPPPP\召唤师yami -> F:\Video\PPPPPPPPPP\P家\召唤师yami
+2024-09-20 20:49:09,301 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 召唤师yami
+2024-09-20 20:49:09,301 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\夏诺雅_shanoa
+2024-09-20 20:49:09,301 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 夏诺雅_shanoa
+2024-09-20 20:49:09,301 [INFO] MainProcess - [move] 移动文件：F:\Video\PPPPPPPPPP\夏诺雅_shanoa -> F:\Video\PPPPPPPPPP\P家\夏诺雅_shanoa
+2024-09-20 20:49:09,301 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 夏诺雅_shanoa
+2024-09-20 20:49:09,301 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\孙有劲Sunyeojin
+2024-09-20 20:49:09,301 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 孙有劲Sunyeojin
+2024-09-20 20:49:09,301 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 孙有劲Sunyeojin
+2024-09-20 20:49:09,301 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\星熊uru
+2024-09-20 20:49:09,301 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 星熊uru
+2024-09-20 20:49:09,302 [INFO] MainProcess - [move] 移动文件：F:\Video\PPPPPPPPPP\星熊uru -> F:\Video\PPPPPPPPPP\P家\星熊uru
+2024-09-20 20:49:09,302 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 星熊uru
+2024-09-20 20:49:09,302 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\牛野露哞_usrm
+2024-09-20 20:49:09,302 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 牛野露哞_usrm
+2024-09-20 20:49:09,302 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 牛野露哞_usrm
+2024-09-20 20:49:09,302 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\猫宫心爱
+2024-09-20 20:49:09,302 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 猫宫心爱
+2024-09-20 20:49:09,302 [INFO] MainProcess - [move] 移动文件：F:\Video\PPPPPPPPPP\猫宫心爱 -> F:\Video\PPPPPPPPPP\P家\猫宫心爱
+2024-09-20 20:49:09,303 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 猫宫心爱
+2024-09-20 20:49:09,303 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\眞白花音_Official
+2024-09-20 20:49:09,303 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 眞白花音_Official
+2024-09-20 20:49:09,303 [INFO] MainProcess - [move] 移动文件：F:\Video\PPPPPPPPPP\眞白花音_Official -> F:\Video\PPPPPPPPPP\P家\眞白花音_Official
+2024-09-20 20:49:09,303 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 眞白花音_Official
+2024-09-20 20:49:09,303 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\美月もも
+2024-09-20 20:49:09,303 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 美月もも
+2024-09-20 20:49:09,303 [INFO] MainProcess - [move] 移动文件：F:\Video\PPPPPPPPPP\美月もも -> F:\Video\PPPPPPPPPP\P家\美月もも
+2024-09-20 20:49:09,304 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 美月もも
+2024-09-20 20:49:09,304 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\花园Serena
+2024-09-20 20:49:09,304 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 花园Serena
+2024-09-20 20:49:09,304 [INFO] MainProcess - [move] 移动文件：F:\Video\PPPPPPPPPP\花园Serena -> F:\Video\PPPPPPPPPP\P家\花园Serena
+2024-09-20 20:49:09,304 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 花园Serena
+2024-09-20 20:49:09,304 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\魔狼咪莉娅
+2024-09-20 20:49:09,304 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 魔狼咪莉娅
+2024-09-20 20:49:09,304 [INFO] MainProcess - [move] 移动文件：F:\Video\PPPPPPPPPP\魔狼咪莉娅 -> F:\Video\PPPPPPPPPP\P家\魔狼咪莉娅
+2024-09-20 20:49:09,304 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 魔狼咪莉娅
+2024-09-20 20:49:09,304 [INFO] MainProcess - [录播姬] 处理完成
+2024-09-20 20:49:09,305 [INFO] MainProcess - [Run] 完成 L2 优化操作
+2024-09-20 20:49:09,306 [INFO] MainProcess - ===== L1 统计 =====
+2024-09-20 20:49:09,306 [INFO] MainProcess - --- L1_AAA ---
+2024-09-20 20:49:09,307 [INFO] MainProcess - [统计] 源路径: F:\Video\录播\综合
+2024-09-20 20:49:09,307 [INFO] MainProcess - [统计] 处理前: 35, 处理后: 34
+2024-09-20 20:49:09,308 [INFO] MainProcess - [统计] 移动成功: 1, 移动失败: 0
+2024-09-20 20:49:09,309 [INFO] MainProcess - [统计] 移动失败文件夹: 
+2024-09-20 20:49:09,309 [INFO] MainProcess - [统计] 输出路径: F:\Video\AAAAAAAAAA
+2024-09-20 20:49:09,310 [INFO] MainProcess - [统计] 文件夹: Caramel_奶糖, CuteGabu, HiiroVTuber, Milky_Vtuber, Mujifa-天仙, Tacitly_Official, 咲花なる, 喇叭花姐姐ー天仙, 塔克Tako, 天曰小雏Official, 奈落米拉米, 小搞_official, 小豆沢あずきofficial, 居眠ネム_Nemu, 山椒阿露波Arpa, 帕妃Pafi, 心羽萝妮Official, 星宮汐Official, 正直少年李发卡, 片桐秋_Official, 猫雷NyaRu_Official, 磯辺もち-矶边饼, 综合, 花音-Hanon, 転生子餅
+2024-09-20 20:49:09,311 [INFO] MainProcess - --- L1_PPP ---
+2024-09-20 20:49:09,311 [INFO] MainProcess - [统计] 源路径: F:\Video\录播\P家
+2024-09-20 20:49:09,311 [INFO] MainProcess - [统计] 处理前: 1, 处理后: 1
+2024-09-20 20:49:09,311 [INFO] MainProcess - [统计] 移动成功: 0, 移动失败: 0
+2024-09-20 20:49:09,311 [INFO] MainProcess - [统计] 移动失败文件夹: 
+2024-09-20 20:49:09,312 [INFO] MainProcess - [统计] 输出路径: F:\Video\PPPPPPPPPP
+2024-09-20 20:49:09,312 [INFO] MainProcess - [统计] 文件夹: P家, 孙有劲Sunyeojin, 牛野露哞_usrm
+2024-09-20 20:49:09,312 [INFO] MainProcess - ===== L2 统计 =====
+2024-09-20 20:49:09,313 [INFO] MainProcess - --- L2_AAA ---
+2024-09-20 20:49:09,313 [INFO] MainProcess - [统计] 源路径: F:\Video\AAAAAAAAAA
+2024-09-20 20:49:09,313 [INFO] MainProcess - [统计] 文件夹: Caramel_奶糖, CuteGabu, HiiroVTuber, Milky_Vtuber, Mujifa-天仙, Tacitly_Official, 咲花なる, 喇叭花姐姐ー天仙, 塔克Tako, 天曰小雏Official, 奈落米拉米, 小搞_official, 小豆沢あずきofficial, 居眠ネム_Nemu, 山椒阿露波Arpa, 帕妃Pafi, 心羽萝妮Official, 星宮汐Official, 正直少年李发卡, 片桐秋_Official, 猫雷NyaRu_Official, 磯辺もち-矶边饼, 综合, 花音-Hanon, 転生子餅
+2024-09-20 20:49:09,314 [INFO] MainProcess - [统计] 输出路径: F:\Video\AAAAAAAAAA\综合
+2024-09-20 20:49:09,315 [INFO] MainProcess - [统计] 文件夹: AlternativeLilas, GEMS_COMPANY官方, Hoshimi_Yume, love_charmulet, Newo_Official, NoWorld_Official, Ponya_Ruka, 三森愛乃official, 八鏡mira, 刻耳柏洛梅芙Meifu, 千郁郁sen, 华笑萌桃_Official, 南条绫_Official, 向日葵なっつofficial, 咪菈Mira, 哔哩哔哩直播, 圣香_Official, 夢河夢_Official, 大藏优介-Official, 天球拿铁AmedamaLatte, 天音マリー, 孙羽幽, 小招财猫茶茶丸Official, 小柔Channel, 小针彩, 布朗什初花_Blanche, 延寿糯糯_延寿のの, 微微微美玖萝Official, 恋乃夜舞_propro, 悠音Yune, 成瀬凛_Official, 明前奶绿, 星ノ宮春鈴_Official, 星期四Thurz, 月森梦爱, 月百合kira_Official, 桃葉Momoha, 梦喰己白_Kohaku, 森瀬Tsugumi, 樱咲奈央_Official, 烤鱼子Official, 犬山玉姬Official, 狐火燐音_Official, 猫星空_official, 猫羽丘比_Official, 猫羽小真理_Official, 田中姬铃木雏Official, 电气羊_珂莉黛露, 疾风Haya_Official, 白咲露理Tsuyuri, 白桃心宁, 白紫茉莉Official, 真红莉爱official, 神代るるるOfficial, 穂木乃香-天仙, 葛城奇跡, 虹乃娜娜_Vtuber, 賴城来拉_LairaRaijo, 金切遊楽Channel, 钉宫妮妮Ninico, 阿德涅adeni, 雅ひなの, 鶴河咲雪Vtuber
+2024-09-20 20:49:09,316 [INFO] MainProcess - --- L2_PPP ---
+2024-09-20 20:49:09,317 [INFO] MainProcess - [统计] 源路径: F:\Video\PPPPPPPPPP
+2024-09-20 20:49:09,317 [INFO] MainProcess - [统计] 文件夹: P家, 孙有劲Sunyeojin, 牛野露哞_usrm
+2024-09-20 20:49:09,317 [INFO] MainProcess - [统计] 输出路径: F:\Video\PPPPPPPPPP\P家
+2024-09-20 20:49:09,318 [INFO] MainProcess - [统计] 文件夹: 召唤师yami, 夏诺雅_shanoa, 星熊uru, 猫宫心爱, 眞白花音_Official, 美月もも, 花园Serena, 魔狼咪莉娅
+2024-09-20 20:49:09,319 [DEBUG] MainProcess - Using proactor: IocpProactor
+2024-09-20 20:49:09,325 [DEBUG] MainProcess - connect_tcp.started host='100.111.200.61' port=18101 local_address=None timeout=5.0 socket_options=None
+2024-09-20 20:49:09,337 [DEBUG] MainProcess - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x00000250CD2373E0>
+2024-09-20 20:49:09,338 [DEBUG] MainProcess - send_request_headers.started request=<Request [b'POST']>
+2024-09-20 20:49:09,339 [DEBUG] MainProcess - send_request_headers.complete
+2024-09-20 20:49:09,339 [DEBUG] MainProcess - send_request_body.started request=<Request [b'POST']>
+2024-09-20 20:49:09,340 [DEBUG] MainProcess - send_request_body.complete
+2024-09-20 20:49:09,340 [DEBUG] MainProcess - receive_response_headers.started request=<Request [b'POST']>
+2024-09-20 20:49:09,359 [DEBUG] MainProcess - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json'), (b'Date', b'Fri, 20 Sep 2024 12:49:09 GMT'), (b'Transfer-Encoding', b'chunked')])
+2024-09-20 20:49:09,360 [DEBUG] MainProcess - receive_response_body.started request=<Request [b'POST']>
+2024-09-20 20:49:09,360 [DEBUG] MainProcess - receive_response_body.complete
+2024-09-20 20:49:09,360 [DEBUG] MainProcess - response_closed.started
+2024-09-20 20:49:09,360 [DEBUG] MainProcess - response_closed.complete
+2024-09-20 20:49:09,361 [INFO] MainProcess - [Gotify] 信息推送成功
+2024-09-20 20:49:09,361 [DEBUG] MainProcess - close.started
+2024-09-20 20:49:09,361 [DEBUG] MainProcess - close.complete
+2024-09-20 21:19:10,238 [INFO] MainProcess - 
+[计划] 当前时间: 2024-09-20 21:19:10
+2024-09-20 21:19:10,238 [INFO] MainProcess - [计划] 下次运行时间: 2024-09-20 22:00:00
+2024-09-20 21:49:10,911 [INFO] MainProcess - 
+[计划] 当前时间: 2024-09-20 21:49:10
+2024-09-20 21:49:10,911 [INFO] MainProcess - [计划] 下次运行时间: 2024-09-20 22:00:00
+2024-09-20 22:00:00,139 [DEBUG] MainProcess - Running job Job(interval=1, unit=days, do=run_optimize, args=(), kwargs={})
+2024-09-20 22:00:00,139 [INFO] MainProcess - [Run] 开始 L1 移动操作
+2024-09-20 22:00:00,140 [DEBUG] MainProcess - Starting new HTTP connection (1): 127.0.0.1:11111
+2024-09-20 22:00:00,738 [DEBUG] MainProcess - http://127.0.0.1:11111 "GET /api/data HTTP/1.1" 200 728463
+2024-09-20 22:00:00,770 [DEBUG] MainProcess - [L1][移动] 开始移动录播文件
+2024-09-20 22:00:00,770 [DEBUG] MainProcess - [L1][移动] 开始处理目标路径 F:\Video\AAAAAAAAAA, 总共有 49 个文件夹
+2024-09-20 22:00:00,771 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 AlternativeLilas
+2024-09-20 22:00:00,771 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 AlternativeLilas 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,771 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 Hoshimi_Yume
+2024-09-20 22:00:00,771 [DEBUG] MainProcess - [L1][移动] 用户文件夹 Hoshimi_Yume 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,771 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 NoWorld_Official
+2024-09-20 22:00:00,771 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 NoWorld_Official 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,771 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 Riru璃露
+2024-09-20 22:00:00,771 [DEBUG] MainProcess - [L1][移动] 用户文件夹 Riru璃露 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,771 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 伊崎绫香公式
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 伊崎绫香公式 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 八鏡mira
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 八鏡mira 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 刻耳柏洛梅芙Meifu
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 用户文件夹 刻耳柏洛梅芙Meifu 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 千郁郁sen
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 用户文件夹 千郁郁sen 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 向日葵なっつofficial
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 用户文件夹 向日葵なっつofficial 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 咪菈Mira
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 用户文件夹 咪菈Mira 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 咲花なる
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 用户文件夹 咲花なる 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 塔克Tako
+2024-09-20 22:00:00,772 [DEBUG] MainProcess - [L1][移动] 用户文件夹 塔克Tako 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,773 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 大藏优介-Official
+2024-09-20 22:00:00,773 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 大藏优介-Official 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,773 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 天球拿铁AmedamaLatte
+2024-09-20 22:00:00,773 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 天球拿铁AmedamaLatte 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,773 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 奇屋敷森森_Official
+2024-09-20 22:00:00,773 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 奇屋敷森森_Official 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,773 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 奈落米拉米
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 已合并文件夹 奈落米拉米 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 孙羽幽
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 用户文件夹 孙羽幽 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 宇佐紀ノノ_usagi
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 用户文件夹 宇佐紀ノノ_usagi 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 小柔Channel
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 用户文件夹 小柔Channel 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 布朗什初花_Blanche
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 用户文件夹 布朗什初花_Blanche 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 心羽萝妮Official
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 用户文件夹 心羽萝妮Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 明前奶绿
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 用户文件夹 明前奶绿 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 星ノ宮春鈴_Official
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 用户文件夹 星ノ宮春鈴_Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 星期四Thurz
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 用户文件夹 星期四Thurz 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 星河Sagi
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 用户文件夹 星河Sagi 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,774 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 星野爱丽丝Vup
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 星野爱丽丝Vup 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 月百合kira_Official
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 用户文件夹 月百合kira_Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 椎田Tsugumi
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 椎田Tsugumi 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 樱咲奈央_Official
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 用户文件夹 樱咲奈央_Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 烤鱼子Official
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 用户文件夹 烤鱼子Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 熊野Mina_official
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 用户文件夹 熊野Mina_official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 犬山玉姬Official
+2024-09-20 22:00:00,775 [DEBUG] MainProcess - [L1][移动] 用户文件夹 犬山玉姬Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 狮子神蕾欧娜_official
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 用户文件夹 狮子神蕾欧娜_official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 猫雷NyaRu_Official
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 用户文件夹 猫雷NyaRu_Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 甘井羽衣_Official
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 用户文件夹 甘井羽衣_Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 疾风Haya_Official
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 用户文件夹 疾风Haya_Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 白桃心宁
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 用户文件夹 白桃心宁 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 真咲樱_Official
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 真咲樱_Official 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 真红莉爱official
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 用户文件夹 真红莉爱official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 真面目喵露_Official
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 用户文件夹 真面目喵露_Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,776 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 神代るるるOfficial
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 用户文件夹 神代るるるOfficial 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 賴城来拉_LairaRaijo
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 用户文件夹 賴城来拉_LairaRaijo 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 転生子餅
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 用户文件夹 転生子餅 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 金切遊楽Channel
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 用户文件夹 金切遊楽Channel 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 钉宫妮妮Ninico
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 用户文件夹 钉宫妮妮Ninico 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 饼猫心茉_Official
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 用户文件夹 饼猫心茉_Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 鬼霧シアン_Official
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 鬼霧シアン_Official 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 鲤鱼_Official
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 用户文件夹 鲤鱼_Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,777 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 鶴河咲雪Vtuber
+2024-09-20 22:00:00,778 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 鶴河咲雪Vtuber 到 F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,778 [DEBUG] MainProcess - [L1][移动] 开始处理目标路径 F:\Video\PPPPPPPPPP, 总共有 2 个文件夹
+2024-09-20 22:00:00,778 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 猫宫心爱
+2024-09-20 22:00:00,778 [DEBUG] MainProcess - [L1][移动] 已成功移动文件夹 猫宫心爱 到 F:\Video\PPPPPPPPPP
+2024-09-20 22:00:00,778 [DEBUG] MainProcess - [L1][移动] 开始处理用户文件夹 紫桃爱音Official
+2024-09-20 22:00:00,778 [DEBUG] MainProcess - [L1][移动] 用户文件夹 紫桃爱音Official 正在直播或者录制中，跳过移动
+2024-09-20 22:00:00,780 [INFO] MainProcess - [Run] 完成 L1 移动操作
+2024-09-20 22:00:00,781 [INFO] MainProcess - [Run] 开始 L2 优化操作
+2024-09-20 22:00:00,781 [INFO] MainProcess - [BLREC] 开始处理
+2024-09-20 22:00:00,781 [DEBUG] MainProcess - [BLREC] 开始合并文件夹
+2024-09-20 22:00:00,799 [INFO] MainProcess - [BLREC] 处理完成
+2024-09-20 22:00:00,800 [INFO] MainProcess - [录播姬] 开始处理
+2024-09-20 22:00:00,800 [INFO] MainProcess - [L2][录播姬] 开始处理源路径: F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,800 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\AlternativeLilas
+2024-09-20 22:00:00,800 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: AlternativeLilas
+2024-09-20 22:00:00,800 [INFO] MainProcess - [move] 目标文件夹已存在，合并内容：F:\Video\AAAAAAAAAA\AlternativeLilas -> F:\Video\AAAAAAAAAA\综合\AlternativeLilas
+2024-09-20 22:00:00,800 [DEBUG] MainProcess - [move] 移动项：F:\Video\AAAAAAAAAA\AlternativeLilas\20240920-200013_谁家日V成天玩逆水寒啊？【AlternativeLilas】 -> F:\Video\AAAAAAAAAA\综合\AlternativeLilas\20240920-200013_谁家日V成天玩逆水寒啊？【AlternativeLilas】
+2024-09-20 22:00:00,801 [DEBUG] MainProcess - [move] 源文件夹已清空，已删除：F:\Video\AAAAAAAAAA\AlternativeLilas
+2024-09-20 22:00:00,801 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: AlternativeLilas
+2024-09-20 22:00:00,801 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\Caramel_奶糖
+2024-09-20 22:00:00,801 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: Caramel_奶糖
+2024-09-20 22:00:00,801 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: Caramel_奶糖
+2024-09-20 22:00:00,801 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\CuteGabu
+2024-09-20 22:00:00,801 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: CuteGabu
+2024-09-20 22:00:00,801 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: CuteGabu
+2024-09-20 22:00:00,801 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\HiiroVTuber
+2024-09-20 22:00:00,801 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: HiiroVTuber
+2024-09-20 22:00:00,802 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: HiiroVTuber
+2024-09-20 22:00:00,802 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\Milky_Vtuber
+2024-09-20 22:00:00,802 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: Milky_Vtuber
+2024-09-20 22:00:00,802 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: Milky_Vtuber
+2024-09-20 22:00:00,802 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\Mujifa-天仙
+2024-09-20 22:00:00,802 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: Mujifa-天仙
+2024-09-20 22:00:00,802 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: Mujifa-天仙
+2024-09-20 22:00:00,802 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\NoWorld_Official
+2024-09-20 22:00:00,802 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: NoWorld_Official
+2024-09-20 22:00:00,802 [INFO] MainProcess - [move] 目标文件夹已存在，合并内容：F:\Video\AAAAAAAAAA\NoWorld_Official -> F:\Video\AAAAAAAAAA\综合\NoWorld_Official
+2024-09-20 22:00:00,803 [DEBUG] MainProcess - [move] 移动项：F:\Video\AAAAAAAAAA\NoWorld_Official\20240920-203612_晚安安 唱歌【NoWorld_Official】 -> F:\Video\AAAAAAAAAA\综合\NoWorld_Official\20240920-203612_晚安安 唱歌【NoWorld_Official】
+2024-09-20 22:00:00,803 [DEBUG] MainProcess - [move] 源文件夹已清空，已删除：F:\Video\AAAAAAAAAA\NoWorld_Official
+2024-09-20 22:00:00,803 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: NoWorld_Official
+2024-09-20 22:00:00,803 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\Tacitly_Official
+2024-09-20 22:00:00,803 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: Tacitly_Official
+2024-09-20 22:00:00,804 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: Tacitly_Official
+2024-09-20 22:00:00,804 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\伊崎绫香公式
+2024-09-20 22:00:00,804 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 伊崎绫香公式
+2024-09-20 22:00:00,804 [INFO] MainProcess - [move] 移动文件：F:\Video\AAAAAAAAAA\伊崎绫香公式 -> F:\Video\AAAAAAAAAA\综合\伊崎绫香公式
+2024-09-20 22:00:00,804 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 伊崎绫香公式
+2024-09-20 22:00:00,804 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\八鏡mira
+2024-09-20 22:00:00,804 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 八鏡mira
+2024-09-20 22:00:00,804 [INFO] MainProcess - [move] 目标文件夹已存在，合并内容：F:\Video\AAAAAAAAAA\八鏡mira -> F:\Video\AAAAAAAAAA\综合\八鏡mira
+2024-09-20 22:00:00,805 [DEBUG] MainProcess - [move] 移动项：F:\Video\AAAAAAAAAA\八鏡mira\20240920-200204_会听中文的日V看西游记【八鏡mira】 -> F:\Video\AAAAAAAAAA\综合\八鏡mira\20240920-200204_会听中文的日V看西游记【八鏡mira】
+2024-09-20 22:00:00,805 [DEBUG] MainProcess - [move] 源文件夹已清空，已删除：F:\Video\AAAAAAAAAA\八鏡mira
+2024-09-20 22:00:00,805 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 八鏡mira
+2024-09-20 22:00:00,805 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\咲花なる
+2024-09-20 22:00:00,805 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 咲花なる
+2024-09-20 22:00:00,805 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 咲花なる
+2024-09-20 22:00:00,805 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\喇叭花姐姐ー天仙
+2024-09-20 22:00:00,805 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 喇叭花姐姐ー天仙
+2024-09-20 22:00:00,806 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 喇叭花姐姐ー天仙
+2024-09-20 22:00:00,806 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\塔克Tako
+2024-09-20 22:00:00,806 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 塔克Tako
+2024-09-20 22:00:00,806 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 塔克Tako
+2024-09-20 22:00:00,806 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\大藏优介-Official
+2024-09-20 22:00:00,807 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 大藏优介-Official
+2024-09-20 22:00:00,807 [INFO] MainProcess - [move] 目标文件夹已存在，合并内容：F:\Video\AAAAAAAAAA\大藏优介-Official -> F:\Video\AAAAAAAAAA\综合\大藏优介-Official
+2024-09-20 22:00:00,807 [DEBUG] MainProcess - [move] 移动项：F:\Video\AAAAAAAAAA\大藏优介-Official\20240920-200111_歌回【大藏优介-Official】 -> F:\Video\AAAAAAAAAA\综合\大藏优介-Official\20240920-200111_歌回【大藏优介-Official】
+2024-09-20 22:00:00,807 [DEBUG] MainProcess - [move] 源文件夹已清空，已删除：F:\Video\AAAAAAAAAA\大藏优介-Official
+2024-09-20 22:00:00,807 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 大藏优介-Official
+2024-09-20 22:00:00,807 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\天曰小雏Official
+2024-09-20 22:00:00,807 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 天曰小雏Official
+2024-09-20 22:00:00,807 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 天曰小雏Official
+2024-09-20 22:00:00,807 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\天球拿铁AmedamaLatte
+2024-09-20 22:00:00,807 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 天球拿铁AmedamaLatte
+2024-09-20 22:00:00,807 [INFO] MainProcess - [move] 目标文件夹已存在，合并内容：F:\Video\AAAAAAAAAA\天球拿铁AmedamaLatte -> F:\Video\AAAAAAAAAA\综合\天球拿铁AmedamaLatte
+2024-09-20 22:00:00,808 [DEBUG] MainProcess - [move] 移动项：F:\Video\AAAAAAAAAA\天球拿铁AmedamaLatte\20240920-193222_【日Ｖ新人】试试玩《DeadLock》！【天球拿铁AmedamaLatte】 -> F:\Video\AAAAAAAAAA\综合\天球拿铁AmedamaLatte\20240920-193222_【日Ｖ新人】试试玩《DeadLock》！【天球拿铁AmedamaLatte】
+2024-09-20 22:00:00,808 [DEBUG] MainProcess - [move] 源文件夹已清空，已删除：F:\Video\AAAAAAAAAA\天球拿铁AmedamaLatte
+2024-09-20 22:00:00,808 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 天球拿铁AmedamaLatte
+2024-09-20 22:00:00,808 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\奇屋敷森森_Official
+2024-09-20 22:00:00,808 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 奇屋敷森森_Official
+2024-09-20 22:00:00,808 [INFO] MainProcess - [move] 移动文件：F:\Video\AAAAAAAAAA\奇屋敷森森_Official -> F:\Video\AAAAAAAAAA\综合\奇屋敷森森_Official
+2024-09-20 22:00:00,808 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 奇屋敷森森_Official
+2024-09-20 22:00:00,808 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\奈落米拉米
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 奈落米拉米
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 奈落米拉米
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\小搞_official
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 小搞_official
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 小搞_official
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\小豆沢あずきofficial
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 小豆沢あずきofficial
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 小豆沢あずきofficial
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\居眠ネム_Nemu
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 居眠ネム_Nemu
+2024-09-20 22:00:00,809 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 居眠ネム_Nemu
+2024-09-20 22:00:00,810 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\山椒阿露波Arpa
+2024-09-20 22:00:00,810 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 山椒阿露波Arpa
+2024-09-20 22:00:00,810 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 山椒阿露波Arpa
+2024-09-20 22:00:00,810 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\帕妃Pafi
+2024-09-20 22:00:00,810 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 帕妃Pafi
+2024-09-20 22:00:00,810 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 帕妃Pafi
+2024-09-20 22:00:00,810 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\星野爱丽丝Vup
+2024-09-20 22:00:00,810 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 星野爱丽丝Vup
+2024-09-20 22:00:00,810 [INFO] MainProcess - [move] 移动文件：F:\Video\AAAAAAAAAA\星野爱丽丝Vup -> F:\Video\AAAAAAAAAA\综合\星野爱丽丝Vup
+2024-09-20 22:00:00,811 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 星野爱丽丝Vup
+2024-09-20 22:00:00,811 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\椎田Tsugumi
+2024-09-20 22:00:00,811 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 椎田Tsugumi
+2024-09-20 22:00:00,811 [INFO] MainProcess - [move] 移动文件：F:\Video\AAAAAAAAAA\椎田Tsugumi -> F:\Video\AAAAAAAAAA\综合\椎田Tsugumi
+2024-09-20 22:00:00,811 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 椎田Tsugumi
+2024-09-20 22:00:00,811 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\片桐秋_Official
+2024-09-20 22:00:00,811 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 片桐秋_Official
+2024-09-20 22:00:00,811 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 片桐秋_Official
+2024-09-20 22:00:00,811 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\猫雷NyaRu_Official
+2024-09-20 22:00:00,811 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 猫雷NyaRu_Official
+2024-09-20 22:00:00,812 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 猫雷NyaRu_Official
+2024-09-20 22:00:00,812 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\真咲樱_Official
+2024-09-20 22:00:00,812 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 真咲樱_Official
+2024-09-20 22:00:00,812 [INFO] MainProcess - [move] 移动文件：F:\Video\AAAAAAAAAA\真咲樱_Official -> F:\Video\AAAAAAAAAA\综合\真咲樱_Official
+2024-09-20 22:00:00,812 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 真咲樱_Official
+2024-09-20 22:00:00,812 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\磯辺もち-矶边饼
+2024-09-20 22:00:00,812 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 磯辺もち-矶边饼
+2024-09-20 22:00:00,812 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 磯辺もち-矶边饼
+2024-09-20 22:00:00,812 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\综合
+2024-09-20 22:00:00,812 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 综合
+2024-09-20 22:00:00,812 [ERROR] MainProcess - [L2][录播姬] 无法将目录 'F:\Video\AAAAAAAAAA\综合' 移动到其子目录 'F:\Video\AAAAAAAAAA\综合\综合'，操作被跳过。
+2024-09-20 22:00:00,813 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\花音-Hanon
+2024-09-20 22:00:00,813 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 花音-Hanon
+2024-09-20 22:00:00,813 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 花音-Hanon
+2024-09-20 22:00:00,813 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\鬼霧シアン_Official
+2024-09-20 22:00:00,813 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 鬼霧シアン_Official
+2024-09-20 22:00:00,813 [INFO] MainProcess - [move] 移动文件：F:\Video\AAAAAAAAAA\鬼霧シアン_Official -> F:\Video\AAAAAAAAAA\综合\鬼霧シアン_Official
+2024-09-20 22:00:00,814 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 鬼霧シアン_Official
+2024-09-20 22:00:00,814 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\AAAAAAAAAA\鶴河咲雪Vtuber
+2024-09-20 22:00:00,814 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 鶴河咲雪Vtuber
+2024-09-20 22:00:00,814 [INFO] MainProcess - [move] 目标文件夹已存在，合并内容：F:\Video\AAAAAAAAAA\鶴河咲雪Vtuber -> F:\Video\AAAAAAAAAA\综合\鶴河咲雪Vtuber
+2024-09-20 22:00:00,815 [DEBUG] MainProcess - [move] 移动项：F:\Video\AAAAAAAAAA\鶴河咲雪Vtuber\20240920-200725_【B限日V】第一次吃月饼！美麗３D付♡【鶴河咲雪Vtuber】 -> F:\Video\AAAAAAAAAA\综合\鶴河咲雪Vtuber\20240920-200725_【B限日V】第一次吃月饼！美麗３D付♡【鶴河咲雪Vtuber】
+2024-09-20 22:00:00,815 [DEBUG] MainProcess - [move] 源文件夹已清空，已删除：F:\Video\AAAAAAAAAA\鶴河咲雪Vtuber
+2024-09-20 22:00:00,815 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 鶴河咲雪Vtuber
+2024-09-20 22:00:00,815 [INFO] MainProcess - [L2][录播姬] 开始处理源路径: F:\Video\PPPPPPPPPP
+2024-09-20 22:00:00,815 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\P家
+2024-09-20 22:00:00,815 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: P家
+2024-09-20 22:00:00,815 [ERROR] MainProcess - [L2][录播姬] 无法将目录 'F:\Video\PPPPPPPPPP\P家' 移动到其子目录 'F:\Video\PPPPPPPPPP\P家\P家'，操作被跳过。
+2024-09-20 22:00:00,815 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: F:\Video\PPPPPPPPPP\猫宫心爱
+2024-09-20 22:00:00,815 [INFO] MainProcess - [L2][录播姬] 开始处理文件夹: 猫宫心爱
+2024-09-20 22:00:00,816 [INFO] MainProcess - [move] 目标文件夹已存在，合并内容：F:\Video\PPPPPPPPPP\猫宫心爱 -> F:\Video\PPPPPPPPPP\P家\猫宫心爱
+2024-09-20 22:00:00,816 [DEBUG] MainProcess - [move] 移动项：F:\Video\PPPPPPPPPP\猫宫心爱\20240920-195911_一起看看【猫宫心爱】 -> F:\Video\PPPPPPPPPP\P家\猫宫心爱\20240920-195911_一起看看【猫宫心爱】
+2024-09-20 22:00:00,816 [DEBUG] MainProcess - [move] 源文件夹已清空，已删除：F:\Video\PPPPPPPPPP\猫宫心爱
+2024-09-20 22:00:00,816 [INFO] MainProcess - [L2][录播姬] 处理完成文件夹: 猫宫心爱
+2024-09-20 22:00:00,816 [INFO] MainProcess - [录播姬] 处理完成
+2024-09-20 22:00:00,816 [INFO] MainProcess - [Run] 完成 L2 优化操作
+2024-09-20 22:00:00,816 [INFO] MainProcess - ===== L1 统计 =====
+2024-09-20 22:00:00,817 [INFO] MainProcess - --- L1_AAA ---
+2024-09-20 22:00:00,817 [INFO] MainProcess - [统计] 源路径: F:\Video\录播\综合
+2024-09-20 22:00:00,817 [INFO] MainProcess - [统计] 处理前: 49, 处理后: 36
+2024-09-20 22:00:00,817 [INFO] MainProcess - [统计] 移动成功: 13, 移动失败: 0
+2024-09-20 22:00:00,817 [INFO] MainProcess - [统计] 移动失败文件夹: 
+2024-09-20 22:00:00,817 [INFO] MainProcess - [统计] 输出路径: F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,818 [INFO] MainProcess - [统计] 文件夹: Caramel_奶糖, CuteGabu, HiiroVTuber, Milky_Vtuber, Mujifa-天仙, Tacitly_Official, 咲花なる, 喇叭花姐姐ー天仙, 塔克Tako, 天曰小雏Official, 奈落米拉米, 小搞_official, 小豆沢あずきofficial, 居眠ネム_Nemu, 山椒阿露波Arpa, 帕妃Pafi, 片桐秋_Official, 猫雷NyaRu_Official, 磯辺もち-矶边饼, 综合, 花音-Hanon
+2024-09-20 22:00:00,818 [INFO] MainProcess - --- L1_PPP ---
+2024-09-20 22:00:00,818 [INFO] MainProcess - [统计] 源路径: F:\Video\录播\P家
+2024-09-20 22:00:00,818 [INFO] MainProcess - [统计] 处理前: 2, 处理后: 1
+2024-09-20 22:00:00,819 [INFO] MainProcess - [统计] 移动成功: 1, 移动失败: 0
+2024-09-20 22:00:00,819 [INFO] MainProcess - [统计] 移动失败文件夹: 
+2024-09-20 22:00:00,819 [INFO] MainProcess - [统计] 输出路径: F:\Video\PPPPPPPPPP
+2024-09-20 22:00:00,819 [INFO] MainProcess - [统计] 文件夹: P家
+2024-09-20 22:00:00,819 [INFO] MainProcess - ===== L2 统计 =====
+2024-09-20 22:00:00,819 [INFO] MainProcess - --- L2_AAA ---
+2024-09-20 22:00:00,819 [INFO] MainProcess - [统计] 源路径: F:\Video\AAAAAAAAAA
+2024-09-20 22:00:00,820 [INFO] MainProcess - [统计] 文件夹: Caramel_奶糖, CuteGabu, HiiroVTuber, Milky_Vtuber, Mujifa-天仙, Tacitly_Official, 咲花なる, 喇叭花姐姐ー天仙, 塔克Tako, 天曰小雏Official, 奈落米拉米, 小搞_official, 小豆沢あずきofficial, 居眠ネム_Nemu, 山椒阿露波Arpa, 帕妃Pafi, 片桐秋_Official, 猫雷NyaRu_Official, 磯辺もち-矶边饼, 综合, 花音-Hanon
+2024-09-20 22:00:00,820 [INFO] MainProcess - [统计] 输出路径: F:\Video\AAAAAAAAAA\综合
+2024-09-20 22:00:00,821 [INFO] MainProcess - [统计] 文件夹: AlternativeLilas, GEMS_COMPANY官方, Hoshimi_Yume, love_charmulet, Newo_Official, NoWorld_Official, Ponya_Ruka, 三森愛乃official, 伊崎绫香公式, 八鏡mira, 刻耳柏洛梅芙Meifu, 千郁郁sen, 华笑萌桃_Official, 南条绫_Official, 向日葵なっつofficial, 咪菈Mira, 哔哩哔哩直播, 圣香_Official, 夢河夢_Official, 大藏优介-Official, 天球拿铁AmedamaLatte, 天音マリー, 奇屋敷森森_Official, 孙羽幽, 小招财猫茶茶丸Official, 小柔Channel, 小针彩, 布朗什初花_Blanche, 延寿糯糯_延寿のの, 微微微美玖萝Official, 心羽萝妮Official, 恋乃夜舞_propro, 悠音Yune, 成瀬凛_Official, 明前奶绿, 星ノ宮春鈴_Official, 星宮汐Official, 星期四Thurz, 星野爱丽丝Vup, 月森梦爱, 月百合kira_Official, 桃葉Momoha, 梦喰己白_Kohaku, 森瀬Tsugumi, 椎田Tsugumi, 樱咲奈央_Official, 正直少年李发卡, 烤鱼子Official, 犬山玉姬Official, 狐火燐音_Official, 猫星空_official, 猫羽丘比_Official, 猫羽小真理_Official, 田中姬铃木雏Official, 电气羊_珂莉黛露, 疾风Haya_Official, 白咲露理Tsuyuri, 白桃心宁, 白紫茉莉Official, 真咲樱_Official, 真红莉爱official, 神代るるるOfficial, 穂木乃香-天仙, 葛城奇跡, 虹乃娜娜_Vtuber, 賴城来拉_LairaRaijo, 転生子餅, 金切遊楽Channel, 钉宫妮妮Ninico, 阿德涅adeni, 雅ひなの, 鬼霧シアン_Official, 鶴河咲雪Vtuber
+2024-09-20 22:00:00,822 [INFO] MainProcess - --- L2_PPP ---
+2024-09-20 22:00:00,822 [INFO] MainProcess - [统计] 源路径: F:\Video\PPPPPPPPPP
+2024-09-20 22:00:00,822 [INFO] MainProcess - [统计] 文件夹: P家
+2024-09-20 22:00:00,822 [INFO] MainProcess - [统计] 输出路径: F:\Video\PPPPPPPPPP\P家
+2024-09-20 22:00:00,822 [INFO] MainProcess - [统计] 文件夹: 召唤师yami, 夏诺雅_shanoa, 孙有劲Sunyeojin, 星熊uru, 牛野露哞_usrm, 猫宫心爱, 眞白花音_Official, 美月もも, 花园Serena, 魔狼咪莉娅
+2024-09-20 22:00:00,822 [DEBUG] MainProcess - Using proactor: IocpProactor
+2024-09-20 22:00:00,824 [DEBUG] MainProcess - connect_tcp.started host='100.111.200.61' port=18101 local_address=None timeout=5.0 socket_options=None
+2024-09-20 22:00:00,835 [DEBUG] MainProcess - connect_tcp.complete return_value=<httpcore._backends.anyio.AnyIOStream object at 0x00000250CDFCE3F0>
+2024-09-20 22:00:00,836 [DEBUG] MainProcess - send_request_headers.started request=<Request [b'POST']>
+2024-09-20 22:00:00,836 [DEBUG] MainProcess - send_request_headers.complete
+2024-09-20 22:00:00,836 [DEBUG] MainProcess - send_request_body.started request=<Request [b'POST']>
+2024-09-20 22:00:00,836 [DEBUG] MainProcess - send_request_body.complete
+2024-09-20 22:00:00,836 [DEBUG] MainProcess - receive_response_headers.started request=<Request [b'POST']>
+2024-09-20 22:00:00,859 [DEBUG] MainProcess - receive_response_headers.complete return_value=(b'HTTP/1.1', 200, b'OK', [(b'Content-Type', b'application/json'), (b'Date', b'Fri, 20 Sep 2024 14:00:00 GMT'), (b'Transfer-Encoding', b'chunked')])
+2024-09-20 22:00:00,860 [DEBUG] MainProcess - receive_response_body.started request=<Request [b'POST']>
+2024-09-20 22:00:00,860 [DEBUG] MainProcess - receive_response_body.complete
+2024-09-20 22:00:00,860 [DEBUG] MainProcess - response_closed.started
+2024-09-20 22:00:00,860 [DEBUG] MainProcess - response_closed.complete
+2024-09-20 22:00:00,860 [INFO] MainProcess - [Gotify] 信息推送成功
+2024-09-20 22:00:00,860 [DEBUG] MainProcess - close.started
+2024-09-20 22:00:00,860 [DEBUG] MainProcess - close.complete
+2024-09-20 22:19:11,293 [INFO] MainProcess - 
+[计划] 当前时间: 2024-09-20 22:19:11
+2024-09-20 22:19:11,294 [INFO] MainProcess - [计划] 下次运行时间: 2024-09-21 00:00:00
+2024-09-20 22:49:11,946 [INFO] MainProcess - 
+[计划] 当前时间: 2024-09-20 22:49:11
+2024-09-20 22:49:11,948 [INFO] MainProcess - [计划] 下次运行时间: 2024-09-21 00:00:00
+2024-09-20 23:19:12,570 [INFO] MainProcess - 
+[计划] 当前时间: 2024-09-20 23:19:12
+2024-09-20 23:19:12,570 [INFO] MainProcess - [计划] 下次运行时间: 2024-09-21 00:00:00
+2024-09-20 23:49:13,182 [INFO] MainProcess - 
+[计划] 当前时间: 2024-09-20 23:49:13
+2024-09-20 23:49:13,182 [INFO] MainProcess - [计划] 下次运行时间: 2024-09-21 00:00:00
