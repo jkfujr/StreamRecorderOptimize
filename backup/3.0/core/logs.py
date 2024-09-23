@@ -56,9 +56,15 @@ def log_print(message, level="INFO"):
     - level (str): 日志等级，默认为 'INFO'。可以设置为 'DEBUG'，'INFO'，'WARNING'，'ERROR'，'CRITICAL'。
     """
     logger = logging.getLogger()
+
+    # 获取对应的日志级别
     if isinstance(level, str):
         level = getattr(logging, level.upper(), logging.INFO)
+
+    # 日志记录
     logger.log(level, message)
+
+    # 自动生成前缀并输出到控制台
     level_name = logging.getLevelName(level)
     prefix = f"{level_name}:     "
     print(prefix + message)

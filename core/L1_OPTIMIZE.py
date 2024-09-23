@@ -1,7 +1,11 @@
 import os
 import requests
 import logging
-from core.move import move_folder, delete_empty_folders  # 引入 delete_empty_folders 函数
+from core.move import (
+    move_folder,
+    delete_empty_folders,
+)  # 引入 delete_empty_folders 函数
+
 
 def fetch_recording_status():
     """
@@ -15,10 +19,17 @@ def fetch_recording_status():
         response = requests.get(api_url)
         response.raise_for_status()
         data = response.json().get("data", [])
-        return {item["name"]: {"recording": item["recording"], "streaming": item["streaming"]} for item in data}
+        return {
+            item["name"]: {
+                "recording": item["recording"],
+                "streaming": item["streaming"],
+            }
+            for item in data
+        }
     except requests.exceptions.RequestException as e:
         logging.debug(f"[L1][API] 请求API失败: {e}")
         return {}
+
 
 def move_folders(folder_path_id, enable_move):
     """
@@ -58,12 +69,20 @@ def move_folders(folder_path_id, enable_move):
                 logging.debug(f"[L1][目录检查] 创建目录 {target_directory} 失败: {e}")
 
         try:
-            total_folders[folder_id] = len([item for item in os.listdir(source_directory) if os.path.isdir(os.path.join(source_directory, item))])
+            total_folders[folder_id] = len(
+                [
+                    item
+                    for item in os.listdir(source_directory)
+                    if os.path.isdir(os.path.join(source_directory, item))
+                ]
+            )
         except FileNotFoundError:
             logging.debug(f"[L1][移动] 源路径 {source_directory} 不存在")
             continue
 
-        logging.debug(f"[L1][移动] 开始处理目标路径 {target_directory}, 总共有 {total_folders[folder_id]} 个文件夹")
+        logging.debug(
+            f"[L1][移动] 开始处理目标路径 {target_directory}, 总共有 {total_folders[folder_id]} 个文件夹"
+        )
 
         for folder_name in os.listdir(source_directory):
             if not os.path.isdir(os.path.join(source_directory, folder_name)):
@@ -71,12 +90,16 @@ def move_folders(folder_path_id, enable_move):
 
             source_folder_path = os.path.join(source_directory, folder_name)
             target_folder_path = os.path.join(target_directory, folder_name)
-            
+
             logging.debug(f"[L1][移动] 开始处理用户文件夹 {folder_name}")
 
             folder_status = recording_status.get(folder_name)
-            if folder_status and (folder_status["recording"] or folder_status["streaming"]):
-                logging.debug(f"[L1][移动] 用户文件夹 {folder_name} 正在直播或者录制中，跳过移动")
+            if folder_status and (
+                folder_status["recording"] or folder_status["streaming"]
+            ):
+                logging.debug(
+                    f"[L1][移动] 用户文件夹 {folder_name} 正在直播或者录制中，跳过移动"
+                )
                 continue
 
             try:

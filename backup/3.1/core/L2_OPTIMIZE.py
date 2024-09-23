@@ -226,6 +226,7 @@ class L2_Main:
                 logging.warning(f"[L2] 源路径不存在：{source_path}")
                 continue
 
+            # 遍历源目录
             for folder_name in os.listdir(source_path):
                 folder_path = os.path.join(source_path, folder_name)
 
@@ -233,14 +234,18 @@ class L2_Main:
                     continue
 
                 if folder_name in self.L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS:
-                    logging.debug(f"[L2] 跳过文件夹（在跳过列表中）：{folder_name}")
+                    logging.debug(
+                        f"[L2] 跳过文件夹（在跳过列表中）：{folder_name}"
+                    )
                     continue
 
                 if folder_name in self.L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS:
+                    # 处理社团文件夹
                     logging.debug(f"[L2] 处理社团文件夹：{folder_name}")
                     self.process_social_folder(folder_path)
                     continue
 
+                # 判断文件夹是否符合 BLREC 的命名规则
                 if self.is_blrec_folder(folder_name):
                     logging.debug(f"[L2] 处理 BLREC 文件夹：{folder_name}")
                     self.blrec.merge_folders(folder_path)
