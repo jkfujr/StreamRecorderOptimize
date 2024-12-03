@@ -1,11 +1,7 @@
 import os
 import requests
 import logging
-from core.move import (
-    move_folder,
-    delete_empty_folders,
-)  # 引入 delete_empty_folders 函数
-
+from .move import move_folder, delete_empty_folders
 
 def fetch_recording_status():
     """
@@ -19,24 +15,18 @@ def fetch_recording_status():
         response = requests.get(api_url)
         response.raise_for_status()
         data = response.json().get("data", [])
-        return {
-            item["name"]: {
-                "recording": item["recording"],
-                "streaming": item["streaming"],
-            }
-            for item in data
-        }
+        return {item["name"]: {"recording": item["recording"], "streaming": item["streaming"]} for item in data}
     except requests.exceptions.RequestException as e:
         logging.debug(f"[L1][API] 请求API失败: {e}")
         return {}
 
-
-def move_folders(folder_path_id, enable_move):
+def move_folders(folder_path_id, social_folder_names, enable_move):
     """
     移动和合并文件夹。
 
     参数:
         folder_path_id (dict): 文件夹路径映射。
+        social_folder_names (list): 社团文件夹名称列表。
         enable_move (bool): 是否启用移动操作。
 
     返回:
@@ -56,6 +46,7 @@ def move_folders(folder_path_id, enable_move):
     recording_status = fetch_recording_status()
 
     logging.debug("[L1][移动] 开始移动录播文件")
+
     for folder_id, paths in folder_path_id.items():
         source_directory = paths["source"]
         target_directory = paths["target"]
@@ -68,39 +59,21 @@ def move_folders(folder_path_id, enable_move):
             except Exception as e:
                 logging.debug(f"[L1][目录检查] 创建目录 {target_directory} 失败: {e}")
 
-        try:
-            total_folders[folder_id] = len(
-                [
-                    item
-                    for item in os.listdir(source_directory)
-                    if os.path.isdir(os.path.join(source_directory, item))
-                ]
-            )
-        except FileNotFoundError:
-            logging.debug(f"[L1][移动] 源路径 {source_directory} 不存在")
+        # 检查源目录是否存在
+        if not os.path.exists(source_directory):
+            logging.debug(f"[L1][移动] 源路径 {source_directory} 不存在，跳过处理")
             continue
 
-        logging.debug(
-            f"[L1][移动] 开始处理目标路径 {target_directory}, 总共有 {total_folders[folder_id]} 个文件夹"
-        )
+        logging.debug(f"[L1][移动] 开始处理源路径 {source_directory}")
 
-        for folder_name in os.listdir(source_directory):
-            if not os.path.isdir(os.path.join(source_directory, folder_name)):
-                continue
-
-            source_folder_path = os.path.join(source_directory, folder_name)
-            target_folder_path = os.path.join(target_directory, folder_name)
-
+        # 定义处理用户文件夹的内部函数
+        def process_user_folder(source_folder_path, target_folder_path, folder_name, folder_id):
             logging.debug(f"[L1][移动] 开始处理用户文件夹 {folder_name}")
 
             folder_status = recording_status.get(folder_name)
-            if folder_status and (
-                folder_status["recording"] or folder_status["streaming"]
-            ):
-                logging.debug(
-                    f"[L1][移动] 用户文件夹 {folder_name} 正在直播或者录制中，跳过移动"
-                )
-                continue
+            if folder_status and (folder_status["recording"] or folder_status["streaming"]):
+                logging.debug(f"[L1][移动] 用户文件夹 {folder_name} 正在直播或者录制中，跳过移动")
+                return
 
             try:
                 move_folder(source_folder_path, target_folder_path, enable_move)
@@ -110,8 +83,32 @@ def move_folders(folder_path_id, enable_move):
                 failed_folders[folder_id] += 1
                 failed_folder_names[folder_id].append(folder_name)
 
-    # 删除空文件夹
-    for paths in folder_path_id.values():
-        delete_empty_folders(paths["source"])
+            total_folders[folder_id] += 1  # 更新总计数
+
+        # 遍历源目录
+        for folder_name in os.listdir(source_directory):
+            full_folder_path = os.path.join(source_directory, folder_name)
+            if not os.path.isdir(full_folder_path):
+                continue
+
+            if folder_name in social_folder_names:
+                # 这是一个社团文件夹，进入其中处理用户文件夹
+                social_folder_path = full_folder_path
+                for user_folder_name in os.listdir(social_folder_path):
+                    user_folder_path = os.path.join(social_folder_path, user_folder_name)
+                    if not os.path.isdir(user_folder_path):
+                        continue
+
+                    source_folder_path = user_folder_path
+                    target_folder_path = os.path.join(target_directory, user_folder_name)
+                    process_user_folder(source_folder_path, target_folder_path, user_folder_name, folder_id)
+            else:
+                # 直接处理用户文件夹
+                source_folder_path = full_folder_path
+                target_folder_path = os.path.join(target_directory, folder_name)
+                process_user_folder(source_folder_path, target_folder_path, folder_name, folder_id)
+
+        # 删除空文件夹
+        delete_empty_folders(source_directory)
 
     return total_folders, moved_folders, failed_folders, failed_folder_names

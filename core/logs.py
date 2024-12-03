@@ -4,7 +4,6 @@ import os
 import logging
 from logging.handlers import TimedRotatingFileHandler
 
-
 def log():
     """
     初始化日志记录器，仅配置文件处理器，记录 DEBUG 及以上级别的日志。
@@ -17,8 +16,8 @@ def log():
 
     # 日志目录
     script_directory = os.path.dirname(os.path.abspath(__file__))
-    log_directory = os.path.abspath(os.path.join(script_directory, "..", "logs"))
-
+    log_directory = os.path.abspath(os.path.join(script_directory, '..', 'logs'))
+    
     if not os.path.exists(log_directory):
         try:
             os.makedirs(log_directory)
@@ -31,7 +30,11 @@ def log():
     log_file_path = os.path.join(log_directory, default_log_file_name)
 
     file_handler = TimedRotatingFileHandler(
-        log_file_path, when="midnight", interval=1, backupCount=30, encoding="utf-8"
+        log_file_path,
+        when="midnight",
+        interval=1,
+        backupCount=30,
+        encoding="utf-8"
     )
     file_handler.suffix = "%Y-%m-%d.log"
     file_handler.setLevel(logging.DEBUG)
@@ -43,7 +46,6 @@ def log():
     logger.addHandler(file_handler)
 
     return logger
-
 
 def log_print(message, level="INFO"):
     """
@@ -57,8 +59,6 @@ def log_print(message, level="INFO"):
     if isinstance(level, str):
         level = getattr(logging, level.upper(), logging.INFO)
     logger.log(level, message)
-
     level_name = logging.getLevelName(level)
     prefix = f"{level_name}:     "
-
     print(prefix + message)

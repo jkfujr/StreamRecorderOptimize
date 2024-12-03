@@ -65,8 +65,19 @@ class L9_Main:
         """
         subfolders = [f for f in os.listdir(user_folder_path) if os.path.isdir(os.path.join(user_folder_path, f))]
         
+        target_folder_path = os.path.join(target_path, os.path.basename(user_folder_path))
+
+        # 检查目标路径是否与源路径相同
+        if os.path.abspath(user_folder_path) == os.path.abspath(target_folder_path):
+            logging.debug(f"[L9][移动] 跳过移动（目标路径与源路径相同）：{user_folder_path}")
+            return
+
+        # 检查目标路径是否在源路径下
+        if os.path.abspath(target_folder_path).startswith(os.path.abspath(user_folder_path)):
+            logging.debug(f"[L9][移动] 跳过移动（目标路径在源路径下）：{user_folder_path} -> {target_folder_path}")
+            return
+
         if len(subfolders) == 1:
-            target_folder_path = os.path.join(target_path, os.path.basename(user_folder_path))
             move_folder(user_folder_path, target_folder_path)
             logging.debug(f"[L9][移动] 移动文件夹：{user_folder_path} -> {target_folder_path}")
         else:
@@ -96,6 +107,17 @@ class L9_Main:
                 logging.debug(f"[L9][移动] 跳过用户文件夹（在跳过列表中）：{user_folder_name}")
                 continue
 
+            # 检查目标路径是否与源路径相同
+            target_user_folder_path = os.path.join(target_social_folder_path, user_folder_name)
+            if os.path.abspath(user_folder_path) == os.path.abspath(target_user_folder_path):
+                logging.debug(f"[L9][移动] 跳过移动（目标路径与源路径相同）：{user_folder_path}")
+                continue
+
+            # 检查目标路径是否在源路径下
+            if os.path.abspath(target_user_folder_path).startswith(os.path.abspath(user_folder_path)):
+                logging.debug(f"[L9][移动] 跳过移动（目标路径在源路径下）：{user_folder_path} -> {target_user_folder_path}")
+                continue
+
             # 处理社团文件夹中的用户文件夹
             self.process_user_folder(user_folder_path, target_social_folder_path)
 
@@ -103,3 +125,5 @@ class L9_Main:
         if not os.listdir(social_folder_path):
             os.rmdir(social_folder_path)
             logging.debug(f"[L9][移动] 删除空的社团文件夹：{social_folder_path}")
+
+

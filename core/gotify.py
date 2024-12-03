@@ -26,15 +26,16 @@ for logger_name in httpx_loggers:
     logging.getLogger(logger_name).propagate = False
     logging.getLogger(logger_name).disabled = True
 
-
-async def push_gotify(
-    ip, token, title, message, priority=1, max_retries=3, retry_delay=3
-):
+async def push_gotify(ip, token, title, message, priority=1, max_retries=3, retry_delay=3):
     if not ip.startswith("http://") and not ip.startswith("https://"):
         ip = f"https://{ip}"
 
     url = f"{ip}/message?token={token}"
-    payload = {"message": message, "priority": priority, "title": title}
+    payload = {
+        "message": message,
+        "priority": priority,
+        "title": title
+    }
 
     async with httpx.AsyncClient(verify=False) as client:
         for attempt in range(1, max_retries + 1):
@@ -44,13 +45,9 @@ async def push_gotify(
                     logging.info("[Gotify] 信息推送成功")
                     break
                 else:
-                    logging.error(
-                        f"[Gotify] 信息推送失败，状态码：{resp.status_code}，重试次数：{attempt}/{max_retries}"
-                    )
+                    logging.error(f"[Gotify] 信息推送失败，状态码：{resp.status_code}，重试次数：{attempt}/{max_retries}")
             except Exception as e:
-                logging.error(
-                    f"[Gotify] 信息推送异常：{e}，重试次数：{attempt}/{max_retries}"
-                )
+                logging.error(f"[Gotify] 信息推送异常：{e}，重试次数：{attempt}/{max_retries}")
             await asyncio.sleep(retry_delay)
         else:
             logging.error(f"[Gotify] 信息推送失败：达到最大重试次数 {max_retries} 次")

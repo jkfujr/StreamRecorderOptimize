@@ -7,17 +7,18 @@ import schedule
 from datetime import datetime
 
 from core.gotify import push_gotify
+from core.logs import log, log_print
 from core.L1_OPTIMIZE import move_folders
 from core.L2_OPTIMIZE import L2_Main
 from core.L9_OPTIMIZE import L9_Main
-from core.logs import log, log_print
+
 
 log()
 
 ### 配置 ###
 
 # Gotify
-GLOBAL_GOTIFY_IP = "http://100.111.200.61:18101"
+GLOBAL_GOTIFY_IP = "http://10.0.0.101:18101"
 GLOBAL_GOTIFY_TOKEN = "A43buC_qB8d8sfk"
 
 # 定时任务
@@ -56,11 +57,13 @@ REC_COMPLETE_PATH = {
 # (L1全局)路径
 L1_OPTIMIZE_GLOBAL_PATH = {
     "AAA": {"source": REC_PATH["AAA"], "target": REC_PENDING_PATH["AAA"]},
-    "PPP": {"source": REC_PATH["AAA"], "target": REC_PENDING_PATH["PPP"]},
+    "PPP": {"source": REC_PATH["PPP"], "target": REC_PENDING_PATH["PPP"]},
 }
 
 # (L1全局)是否启用移动文件夹
 L1_OPTIMIZE_GLOBAL_MOVE = True
+# (L1全局)社团文件夹名称列表
+L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS = ["NIJISANJI", "HOLOLIVE", "VSPO"]
 
 ### L2 ###
 # (L2全局)路径
@@ -70,10 +73,8 @@ L2_OPTIMIZE_GLOBAL_PATH = {
 }
 
 
-# (L2全局)社团文件夹名称列表
-L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS = ["NIJISANJI", "HOLOLIVE", "VSPO"]
 # (L2全局)需要跳过的特殊文件夹名称列表
-L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS = ["000", "111", "222", "333", "444"]
+L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS = ["综合", "P家", "000", "111", "222", "333", "444"]
 # (L2录播姬)需要跳过的录播子文件夹
 L2_OPTIMIZE_RECHEME_SKIP_KEY = [
     "【blrec-flv】",
@@ -92,15 +93,15 @@ L9_OPTIMIZE_GLOBAL_PATH = {
 
 # (L9全局)是否启用移动文件夹
 L9_OPTIMIZE_GLOBAL_MOVE = True
-# (L9全局)需要跳过的特殊文件夹名称列表
-L9_OPTIMIZE_GLOBAL_SKIP_FOLDERS = ["综合", "P家"]
 
 
-### RUN ###
+### 主要操作 ###
+
+
 def L2_OPTIMIZE():
     l2_main = L2_Main(
         L2_OPTIMIZE_GLOBAL_PATH,
-        L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
+        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
         L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS,
         L2_OPTIMIZE_RECHEME_SKIP_KEY,
     )
@@ -111,21 +112,34 @@ def L9_OPTIMIZE():
     l9_main = L9_Main(
         L9_OPTIMIZE_GLOBAL_PATH,
         L9_OPTIMIZE_GLOBAL_MOVE,
-        L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
+        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
         L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS,
     )
     l9_main.process()
 
 
-def statistics(
-    L1_paths,
-    total_L1,
-    moved_L1,
-    failed_L1,
-    failed_names_L1,
-    GLOBAL_GOTIFY_IP,
-    GLOBAL_GOTIFY_TOKEN,
-):
+def get_l2_folder(directory_path):
+    """
+    获取指定目录下的所有子文件夹名称。
+
+    参数:
+        directory_path (str): 目录路径。
+
+    返回:
+        list: 子文件夹名称列表。
+    """
+    try:
+        return [
+            folder
+            for folder in os.listdir(directory_path)
+            if os.path.isdir(os.path.join(directory_path, folder))
+        ]
+    except FileNotFoundError:
+        log_print(f"[统计] 目录不存在: {directory_path}")
+        return []
+
+
+def statistics(L1_paths, total_L1, moved_L1, failed_L1, failed_names_L1, GLOBAL_GOTIFY_IP, GLOBAL_GOTIFY_TOKEN):
     message = f"\n===== L1 统计 =====\n"
     log_print("===== L1 统计 =====")
 
@@ -135,11 +149,7 @@ def statistics(
 
         source_path = L1_paths[folder_id]["source"]
         target_path = L1_paths[folder_id]["target"]
-        processed = (
-            total_L1.get(folder_id, 0)
-            - moved_L1.get(folder_id, 0)
-            - failed_L1.get(folder_id, 0)
-        )
+        processed = total_L1.get(folder_id, 0) - moved_L1.get(folder_id, 0) - failed_L1.get(folder_id, 0)
 
         log_print(f"[统计] 源路径: {source_path}")
         message += f"[统计] 源路径: {source_path}\n"
@@ -147,9 +157,7 @@ def statistics(
         log_print(f"[统计] 处理前: {total_L1.get(folder_id, 0)}, 处理后: {processed}")
         message += f"[统计] 处理前: {total_L1.get(folder_id, 0)}, 处理后: {processed}\n"
 
-        log_print(
-            f"[统计] 移动成功: {moved_L1.get(folder_id, 0)}, 移动失败: {failed_L1.get(folder_id, 0)}"
-        )
+        log_print(f"[统计] 移动成功: {moved_L1.get(folder_id, 0)}, 移动失败: {failed_L1.get(folder_id, 0)}")
         message += f"[统计] 移动成功: {moved_L1.get(folder_id, 0)}, 移动失败: {failed_L1.get(folder_id, 0)}\n"
 
         failed_folders = ", ".join(failed_names_L1.get(folder_id, []))
@@ -161,8 +169,7 @@ def statistics(
 
         try:
             current_folders = [
-                folder
-                for folder in os.listdir(target_path)
+                folder for folder in os.listdir(target_path)
                 if os.path.isdir(os.path.join(target_path, folder))
             ]
             current_folders_str = ", ".join(current_folders)
@@ -180,7 +187,7 @@ def statistics(
                 GLOBAL_GOTIFY_TOKEN,
                 "[优化录播文件2.0] L1统计数据",
                 message,
-                priority=5,
+                priority=3,
             )
         )
     except Exception as e:
@@ -193,8 +200,10 @@ def run_optimize():
     """
     # L1 移动操作
     log_print("[MAIN] 开始 L1 移动操作")
-    total_folders_L1, moved_folders_L1, failed_folders_L1, failed_folder_names_L1 = (
-        move_folders(L1_OPTIMIZE_GLOBAL_PATH, enable_move=L1_OPTIMIZE_GLOBAL_MOVE)
+    total_folders_L1, moved_folders_L1, failed_folders_L1, failed_folder_names_L1 = move_folders(
+        L1_OPTIMIZE_GLOBAL_PATH,
+        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
+        enable_move=L1_OPTIMIZE_GLOBAL_MOVE
     )
     log_print("[MAIN] 完成 L1 移动操作")
 
@@ -220,6 +229,7 @@ def run_optimize():
     )
 
 
+
 def task_scheduler():
     """
     定时任务
@@ -237,14 +247,14 @@ def task_scheduler():
         current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         if time.time() - last_log_time >= log_interval:
-            log_print(f"[MAIN][计划] 当前时间: {current_time}")
+            log_print(f"[计划] 当前时间: {current_time}")
 
             next_run = schedule.next_run()
             if next_run:
                 next_run_time = next_run.strftime("%Y-%m-%d %H:%M:%S")
-                log_print(f"[MAIN][计划] 下次运行时间: {next_run_time}")
+                log_print(f"[计划] 下次运行时间: {next_run_time}")
             else:
-                log_print("[MAIN][计划] 没有待执行的定时任务。")
+                log_print("[计划] 没有待执行的定时任务。")
 
             last_log_time = time.time()
 
