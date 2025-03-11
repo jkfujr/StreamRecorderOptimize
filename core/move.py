@@ -51,18 +51,33 @@ def move_folder(source, target, enable_move=True):
     else:
         logging.info(f"[move] 移动文件夹功能已禁用：{source} -> {target}")
 
-def delete_empty_folders(directory):
+def delete_empty_folders(directory, recording_status=None):
     """
     递归删除空文件夹。
 
     参数:
         directory (str): 需要检查并删除的文件夹路径。
+        recording_status (dict, optional): 文件夹的录制状态字典。
     """
     if os.path.isdir(directory):
+        # 先递归处理子文件夹
         for folder_name in os.listdir(directory):
             folder_path = os.path.join(directory, folder_name)
             if os.path.isdir(folder_path):
-                delete_empty_folders(folder_path)
+                delete_empty_folders(folder_path, recording_status)
+        
+        # 检查文件夹是否为空
         if not os.listdir(directory):
+            # 获取文件夹名称
+            folder_name = os.path.basename(directory)
+            
+            # 如果提供了录制状态，检查是否正在录制或直播
+            if recording_status is not None:
+                folder_status = recording_status.get(folder_name)
+                if folder_status and (folder_status["recording"] or folder_status["streaming"]):
+                    logging.debug(f"[move][delete] 文件夹正在直播或录制中，跳过删除：{directory}")
+                    return
+
+            # 删除空文件夹
             os.rmdir(directory)
-            logging.debug(f"[delete] 已删除空文件夹：{directory}")
+            logging.debug(f"[move][delete] 已删除空文件夹：{directory}")

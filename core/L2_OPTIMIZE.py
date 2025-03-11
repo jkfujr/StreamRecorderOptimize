@@ -7,6 +7,7 @@ from collections import defaultdict
 from datetime import datetime
 
 from .move import move_folder
+from .statistics import Statistics
 
 
 class BLREC:
@@ -16,6 +17,7 @@ class BLREC:
 
     def __init__(self):
         self.pattern = r"(\d{8})-(\d{6})_(.+)【(blrec-flv|blrec-hls)】"
+        self.stats = Statistics()  # 添加统计对象
 
     def parse_folder_name(self, folder_name):
         """
@@ -35,54 +37,53 @@ class BLREC:
         return None, None, None
 
     def merge_folders(self, folder_path):
-        """
-        合并符合条件的文件夹。
-
-        参数:
-            folder_path (str): 需要处理的文件夹路径。
-        """
-        logging.debug(f"[L2][BLREC] 开始处理路径：{folder_path}")
-
+        """合并符合条件的文件夹"""
         if not os.path.exists(folder_path) or not os.path.isdir(folder_path):
             logging.warning(f"[L2][BLREC] 路径不存在或不是目录：{folder_path}")
-            return
+            return False
 
-        while True:
-            folders = defaultdict(list)
-            for root, dirs, files in os.walk(folder_path, topdown=True):
-                for folder_name in dirs:
-                    folder_full_path = os.path.join(root, folder_name)
-                    date, title, suffix = self.parse_folder_name(folder_name)
-                    if date and title and suffix:
-                        folders[(date.date(), title, suffix)].append(
-                            (date, folder_full_path)
-                        )
-
-            merge_completed = False
-            for key, folder_list in folders.items():
-                if len(folder_list) > 1:
-                    logging.debug(f"[L2][BLREC] 发现可合并文件夹：{key}")
-                    folder_list.sort(key=lambda x: x[0])
-                    merge_to_folder = folder_list[0][1]
-                    for _, folder_to_merge in folder_list[1:]:
-                        logging.info(
-                            f"[L2][BLREC] 合并: {folder_to_merge} -> {merge_to_folder}"
-                        )
-                        self.merge_files(merge_to_folder, folder_to_merge)
-                        try:
-                            os.rmdir(folder_to_merge)
-                            merge_completed = True
-                        except Exception as e:
-                            logging.error(
-                                f"[L2][BLREC] 删除文件夹失败：{folder_to_merge}, 错误：{e}"
+        merge_completed = False
+        try:
+            while True:
+                folders = defaultdict(list)
+                for root, dirs, files in os.walk(folder_path, topdown=True):
+                    for folder_name in dirs:
+                        folder_full_path = os.path.join(root, folder_name)
+                        date, title, suffix = self.parse_folder_name(folder_name)
+                        if date and title and suffix:
+                            folders[(date.date(), title, suffix)].append(
+                                (date, folder_full_path)
                             )
-                    if merge_completed:
-                        break
-                else:
-                    logging.debug(f"[L2][BLREC] 没有找到可以合并的文件夹组：{key}")
 
-            if not merge_completed:
-                break
+                for key, folder_list in folders.items():
+                    if len(folder_list) > 1:
+                        logging.debug(f"[L2][BLREC] 发现可合并文件夹：{key}")
+                        folder_list.sort(key=lambda x: x[0])
+                        merge_to_folder = folder_list[0][1]
+                        for _, folder_to_merge in folder_list[1:]:
+                            logging.info(
+                                f"[L2][BLREC] 合并: {folder_to_merge} -> {merge_to_folder}"
+                            )
+                            self.merge_files(merge_to_folder, folder_to_merge)
+                            try:
+                                os.rmdir(folder_to_merge)
+                                merge_completed = True
+                            except Exception as e:
+                                logging.error(
+                                    f"[L2][BLREC] 删除文件夹失败：{folder_to_merge}, 错误：{e}"
+                                )
+                        if merge_completed:
+                            self.stats.add_success_with_name(key[1])  # 使用带名称的成功统计
+                            break
+                    else:
+                        logging.debug(f"[L2][BLREC] 没有找到可以合并的文件夹组：{key}")
+
+                if not merge_completed:
+                    break
+            return merge_completed  # 返回是否有成功的合并操作
+        except Exception as e:
+            logging.error(f"[L2][BLREC] 合并失败：{folder_path}, 错误：{e}")
+            return False
 
     def merge_files(self, target_folder, source_folder):
         """
@@ -116,43 +117,42 @@ class RECHEME:
     """
 
     def __init__(self):
-        pass
+        self.stats = Statistics()  # 添加统计对象
 
     def merge_folders(self, folder_path, L2_OPTIMIZE_RECHEME_SKIP_KEY):
-        """
-        处理录播姬文件夹的合并操作。
-
-        参数:
-            folder_path (str): 需要处理的文件夹路径。
-            L2_OPTIMIZE_RECHEME_SKIP_KEY (list): 需要跳过的子字符串列表。
-        """
-        logging.debug(f"[L2][录播姬] 开始处理路径：{folder_path}")
-
+        """合并符合条件的文件夹"""
         if not os.path.exists(folder_path) or not os.path.isdir(folder_path):
             logging.warning(f"[L2][录播姬] 路径不存在或不是目录：{folder_path}")
-            return
+            return False
 
-        for root, dirs, files in os.walk(folder_path, topdown=False):
-            subfolder_info = defaultdict(list)
-            for subfolder in dirs:
-                if any(
-                    substring in subfolder for substring in L2_OPTIMIZE_RECHEME_SKIP_KEY
-                ):
-                    logging.debug(f"[L2][录播姬] 跳过文件夹：{subfolder}")
-                    continue
-                subfolder_path = os.path.join(root, subfolder)
-                match = re.search(r"(\d{8}-\d{6})", subfolder)
-                if match:
-                    time_info = match.group()
-                    subfolder_info[time_info].append(subfolder_path)
+        try:
+            merge_completed = False
+            for root, dirs, files in os.walk(folder_path, topdown=False):
+                subfolder_info = defaultdict(list)
+                for subfolder in dirs:
+                    if any(
+                        substring in subfolder for substring in L2_OPTIMIZE_RECHEME_SKIP_KEY
+                    ):
+                        logging.debug(f"[L2][录播姬] 跳过文件夹：{subfolder}")
+                        continue
+                    subfolder_path = os.path.join(root, subfolder)
+                    match = re.search(r"(\d{8}-\d{6})", subfolder)
+                    if match:
+                        time_info = match.group()
+                        subfolder_info[time_info].append(subfolder_path)
 
-            for time_info, subfolder_list in subfolder_info.items():
-                if len(subfolder_list) > 1:
-                    main_folder = self.select_main_folder(subfolder_list)
-                    logging.info(f"[L2][录播姬] 合并文件夹：{main_folder}")
-                    self.merge_subfolders(
-                        main_folder, subfolder_list, L2_OPTIMIZE_RECHEME_SKIP_KEY
-                    )
+                for time_info, subfolder_list in subfolder_info.items():
+                    if len(subfolder_list) > 1:
+                        main_folder = self.select_main_folder(subfolder_list)
+                        logging.info(f"[L2][录播姬] 合并文件夹：{main_folder}")
+                        self.merge_subfolders(
+                            main_folder, subfolder_list, L2_OPTIMIZE_RECHEME_SKIP_KEY
+                        )
+
+            return merge_completed  # 返回是否有成功的合并操作
+        except Exception as e:
+            logging.error(f"[L2][录播姬] 合并失败：{folder_path}, 错误：{e}")
+            return False
 
     def select_main_folder(self, subfolder_list):
         """
@@ -205,57 +205,66 @@ class L2_Main:
         L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
         L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS,
         L2_OPTIMIZE_RECHEME_SKIP_KEY,
+        L2_OPTIMIZE_GLOBAL_MOVE=True,  # 添加移动开关参数，默认为 True
     ):
         self.L2_OPTIMIZE_GLOBAL_PATH = L2_OPTIMIZE_GLOBAL_PATH
         self.L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS = L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS
         self.L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS = L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS
         self.L2_OPTIMIZE_RECHEME_SKIP_KEY = L2_OPTIMIZE_RECHEME_SKIP_KEY
+        self.L2_OPTIMIZE_GLOBAL_MOVE = L2_OPTIMIZE_GLOBAL_MOVE  # 保存移动开关
 
         self.blrec = BLREC()
         self.recheme = RECHEME()
+        self.stats = Statistics()  # 添加统计对象
 
     def process(self):
-        """
-        执行 L2 优化的主流程，仅处理源路径中的合并操作。
-        """
-        for id, paths in self.L2_OPTIMIZE_GLOBAL_PATH.items():
-            source_path = paths["source"]
+        """执行 L2 优化操作"""
+        if not self.L2_OPTIMIZE_GLOBAL_MOVE:
+            logging.info("[L2] L2 优化功能被禁用")
+            return self.stats
 
-            # 确保源目录存在
-            if not os.path.exists(source_path):
-                logging.warning(f"[L2] 源路径不存在：{source_path}")
+        for folder_id, paths in self.L2_OPTIMIZE_GLOBAL_PATH.items():
+            source_directory = paths["source"]
+            
+            if not os.path.exists(source_directory):
+                logging.debug(f"[L2] 源路径不存在：{source_directory}")
                 continue
 
-            # 遍历源目录
-            for folder_name in os.listdir(source_path):
-                folder_path = os.path.join(source_path, folder_name)
-
+            for folder_name in os.listdir(source_directory):
+                folder_path = os.path.join(source_directory, folder_name)
+                
                 if not os.path.isdir(folder_path):
                     continue
 
                 if folder_name in self.L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS:
-                    logging.debug(
-                        f"[L2] 跳过文件夹（在跳过列表中）：{folder_name}"
-                    )
+                    self.stats.add_skipped(folder_name, "在跳过列表中")
                     continue
 
-                if folder_name in self.L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS:
-                    # 处理社团文件夹
-                    logging.debug(f"[L2] 处理社团文件夹：{folder_name}")
-                    self.process_social_folder(folder_path)
-                    continue
+                try:
+                    if folder_name in self.L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS:
+                        self.process_social_folder(folder_path)
+                    else:
+                        self.process_user_folder(folder_path)
+                except Exception as e:
+                    self.stats.add_failed(folder_name, str(e))
 
-                # 判断文件夹是否符合 BLREC 的命名规则
-                if self.is_blrec_folder(folder_name):
-                    logging.debug(f"[L2] 处理 BLREC 文件夹：{folder_name}")
-                    self.blrec.merge_folders(folder_path)
-                else:
-                    logging.debug(f"[L2] 处理 RECHEME 文件夹：{folder_name}")
-                    self.recheme.merge_folders(
-                        folder_path, self.L2_OPTIMIZE_RECHEME_SKIP_KEY
-                    )
+        return self.stats
 
-        logging.info("[L2] L2 优化处理完成")
+    def process_user_folder(self, folder_path):
+        folder_name = os.path.basename(folder_path)
+        
+        if folder_name in self.L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS:
+            self.stats.add_skipped(folder_name, "在跳过列表中")
+            return
+
+        if self.is_blrec_folder(folder_name):
+            success = self.blrec.merge_folders(folder_path)
+            if success:
+                self.stats.merge_stats(self.blrec.stats)
+        else:
+            success = self.recheme.merge_folders(folder_path, self.L2_OPTIMIZE_RECHEME_SKIP_KEY)
+            if success:
+                self.stats.merge_stats(self.recheme.stats)
 
     def is_blrec_folder(self, folder_name):
         """
@@ -271,12 +280,7 @@ class L2_Main:
         return re.match(pattern, folder_name) is not None
 
     def process_social_folder(self, social_folder_path):
-        """
-        处理社团文件夹。
-
-        参数:
-            social_folder_path (str): 社团文件夹路径。
-        """
+        social_folder_name = os.path.basename(social_folder_path)
         for folder_name in os.listdir(social_folder_path):
             folder_path = os.path.join(social_folder_path, folder_name)
 
@@ -284,13 +288,10 @@ class L2_Main:
                 continue
 
             if folder_name in self.L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS:
-                logging.debug(f"[L2] 跳过文件夹（在跳过列表中）：{folder_name}")
+                self.stats.add_skipped(folder_name, f"在跳过列表中 (社团: {social_folder_name})")
                 continue
-            if self.is_blrec_folder(folder_name):
-                logging.debug(f"[L2] 处理 BLREC 文件夹：{folder_name}")
-                self.blrec.merge_folders(folder_path)
-            else:
-                logging.debug(f"[L2] 处理 RECHEME 文件夹：{folder_name}")
-                self.recheme.merge_folders(
-                    folder_path, self.L2_OPTIMIZE_RECHEME_SKIP_KEY
-                )
+
+            try:
+                self.process_user_folder(folder_path)
+            except Exception as e:
+                self.stats.add_failed(folder_name, f"处理失败 (社团: {social_folder_name}): {str(e)}")

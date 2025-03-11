@@ -1,6 +1,7 @@
 import os
 import logging
 from .move import move_folder
+from .statistics import Statistics
 
 class L9_Main:
     """
@@ -18,6 +19,7 @@ class L9_Main:
         self.L2_OPTIMIZE_GLOBAL_MOVE = L2_OPTIMIZE_GLOBAL_MOVE
         self.L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS = L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS
         self.L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS = L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS
+        self.stats = Statistics()  # 添加统计对象
 
     def process(self):
         """
@@ -25,15 +27,14 @@ class L9_Main:
         """
         if not self.L2_OPTIMIZE_GLOBAL_MOVE:
             logging.info("[L9][移动] 移动功能被禁用")
-            return
+            return self.stats
 
         for id, paths in self.L9_OPTIMIZE_GLOBAL_PATH.items():
             source_path = paths["source"]
             target_path = paths["target"]
 
-            if not os.path.exists(target_path):
-                os.makedirs(target_path)
-                logging.debug(f"[L9][移动] 创建目标目录：{target_path}")
+            if not os.path.exists(source_path):
+                continue
 
             for folder_name in os.listdir(source_path):
                 folder_path = os.path.join(source_path, folder_name)
@@ -42,19 +43,18 @@ class L9_Main:
                     continue
 
                 if folder_name in self.L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS:
-                    logging.debug(f"[L9][移动] 跳过文件夹（在跳过列表中）：{folder_name}")
+                    self.stats.add_skipped(folder_name, "在跳过列表中")
                     continue
 
-                if folder_name in self.L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS:
-                    # 处理社团文件夹
-                    logging.debug(f"[L9][移动] 处理社团文件夹：{folder_name}")
-                    self.process_social_folder(folder_path, target_path)
-                    continue
+                try:
+                    if folder_name in self.L2_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS:
+                        self.process_social_folder(folder_path, target_path)
+                    else:
+                        self.process_user_folder(folder_path, target_path)
+                except Exception as e:
+                    self.stats.add_failed(folder_name, str(e))
 
-                # 处理普通用户文件夹
-                self.process_user_folder(folder_path, target_path)
-
-        logging.info("[L9][移动] 移动操作完成")
+        return self.stats
 
     def process_user_folder(self, user_folder_path, target_path):
         """
@@ -63,25 +63,31 @@ class L9_Main:
             user_folder_path (str): 用户文件夹路径。
             target_path (str): 目标路径。
         """
-        subfolders = [f for f in os.listdir(user_folder_path) if os.path.isdir(os.path.join(user_folder_path, f))]
-        
-        target_folder_path = os.path.join(target_path, os.path.basename(user_folder_path))
+        folder_name = os.path.basename(user_folder_path)
+        target_folder_path = os.path.join(target_path, folder_name)
 
-        # 检查目标路径是否与源路径相同
+        # 添加源路径和目标路径相同的跳过统计
         if os.path.abspath(user_folder_path) == os.path.abspath(target_folder_path):
-            logging.debug(f"[L9][移动] 跳过移动（目标路径与源路径相同）：{user_folder_path}")
+            self.stats.add_skipped(folder_name, "源路径与目标路径相同")
             return
 
-        # 检查目标路径是否在源路径下
+        # 添加目标路径在源路径下的跳过统计
         if os.path.abspath(target_folder_path).startswith(os.path.abspath(user_folder_path)):
-            logging.debug(f"[L9][移动] 跳过移动（目标路径在源路径下）：{user_folder_path} -> {target_folder_path}")
+            self.stats.add_skipped(folder_name, "目标路径在源路径下")
             return
+
+        # 获取子文件夹列表
+        subfolders = [f for f in os.listdir(user_folder_path) 
+                     if os.path.isdir(os.path.join(user_folder_path, f))]
 
         if len(subfolders) == 1:
-            move_folder(user_folder_path, target_folder_path)
-            logging.debug(f"[L9][移动] 移动文件夹：{user_folder_path} -> {target_folder_path}")
+            try:
+                move_folder(user_folder_path, target_folder_path)
+                self.stats.add_success()
+            except Exception as e:
+                self.stats.add_failed(folder_name, str(e))
         else:
-            logging.debug(f"[L9][移动] 跳过用户文件夹（子文件夹数量超过 1）：{user_folder_path}")
+            self.stats.add_skipped(folder_name, f"子文件夹数量为 {len(subfolders)}")
 
     def process_social_folder(self, social_folder_path, target_path):
         """
@@ -93,9 +99,13 @@ class L9_Main:
         social_folder_name = os.path.basename(social_folder_path)
         target_social_folder_path = os.path.join(target_path, social_folder_name)
 
-        if not os.path.exists(target_social_folder_path):
-            os.makedirs(target_social_folder_path)
-            logging.debug(f"[L9][移动] 创建目标社团目录：{target_social_folder_path}")
+        try:
+            if not os.path.exists(target_social_folder_path):
+                os.makedirs(target_social_folder_path)
+                logging.debug(f"[L9][移动] 创建目标社团目录：{target_social_folder_path}")
+        except Exception as e:
+            self.stats.add_failed(social_folder_name, f"创建目标目录失败: {str(e)}")
+            return
 
         for user_folder_name in os.listdir(social_folder_path):
             user_folder_path = os.path.join(social_folder_path, user_folder_name)
@@ -104,22 +114,24 @@ class L9_Main:
                 continue
 
             if user_folder_name in self.L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS:
-                logging.debug(f"[L9][移动] 跳过用户文件夹（在跳过列表中）：{user_folder_name}")
+                self.stats.add_skipped(user_folder_name, f"在跳过列表中 (社团: {social_folder_name})")
                 continue
 
             # 检查目标路径是否与源路径相同
             target_user_folder_path = os.path.join(target_social_folder_path, user_folder_name)
             if os.path.abspath(user_folder_path) == os.path.abspath(target_user_folder_path):
-                logging.debug(f"[L9][移动] 跳过移动（目标路径与源路径相同）：{user_folder_path}")
+                self.stats.add_skipped(user_folder_name, f"源路径与目标路径相同 (社团: {social_folder_name})")
                 continue
 
             # 检查目标路径是否在源路径下
             if os.path.abspath(target_user_folder_path).startswith(os.path.abspath(user_folder_path)):
-                logging.debug(f"[L9][移动] 跳过移动（目标路径在源路径下）：{user_folder_path} -> {target_user_folder_path}")
+                self.stats.add_skipped(user_folder_name, f"目标路径在源路径下 (社团: {social_folder_name})")
                 continue
 
-            # 处理社团文件夹中的用户文件夹
-            self.process_user_folder(user_folder_path, target_social_folder_path)
+            try:
+                self.process_user_folder(user_folder_path, target_social_folder_path)
+            except Exception as e:
+                self.stats.add_failed(user_folder_name, f"处理失败 (社团: {social_folder_name}): {str(e)}")
 
         # 移动社团文件夹（如果为空）
         if not os.listdir(social_folder_path):

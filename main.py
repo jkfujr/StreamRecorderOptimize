@@ -11,6 +11,7 @@ from core.logs import log, log_print
 from core.L1_OPTIMIZE import move_folders
 from core.L2_OPTIMIZE import L2_Main
 from core.L9_OPTIMIZE import L9_Main
+from core.statistics import format_statistics
 
 
 log()
@@ -34,31 +35,35 @@ GLOBAL_TIMES = [
     "16:00",
     "18:00",
     "20:00",
-    "22:00",
 ]
 
 REC_PATH = {
     "AAA": r"F:\Video\录播\综合",
     "PPP": r"F:\Video\录播\P家",
+    "TTT": r"F:\Video\录播\测试",
 }
 
 REC_PENDING_PATH = {
     "AAA": r"F:\Video\AAAAAAAAAA",
     "PPP": r"F:\Video\PPPPPPPPPP",
+    "TTT": r"F:\Video\TTTTTTTTTT",
 }
 
 REC_COMPLETE_PATH = {
     "AAA": r"F:\Video\AAAAAAAAAA\综合",
     "PPP": r"F:\Video\PPPPPPPPPP\P家",
+    "TTT": r"F:\Video\PPPPPPPPPP\测试",
 }
 
 
 ### L1 ###
 # (L1全局)路径
-L1_OPTIMIZE_GLOBAL_PATH = {
-    "AAA": {"source": REC_PATH["AAA"], "target": REC_PENDING_PATH["AAA"]},
-    "PPP": {"source": REC_PATH["PPP"], "target": REC_PENDING_PATH["PPP"]},
-}
+L1_OPTIMIZE_GLOBAL_PATH = {}
+for key in REC_PATH:
+    L1_OPTIMIZE_GLOBAL_PATH[key] = {
+        "source": REC_PATH[key],
+        "target": REC_PENDING_PATH[key]
+    }
 
 # (L1全局)是否启用移动文件夹
 L1_OPTIMIZE_GLOBAL_MOVE = True
@@ -67,10 +72,11 @@ L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS = ["NIJISANJI", "HOLOLIVE", "VSPO"]
 
 ### L2 ###
 # (L2全局)路径
-L2_OPTIMIZE_GLOBAL_PATH = {
-    "AAA": {"source": REC_PENDING_PATH["AAA"]},
-    "PPP": {"source": REC_PENDING_PATH["PPP"]},
-}
+L2_OPTIMIZE_GLOBAL_PATH = {}
+for key in REC_PENDING_PATH:
+    L2_OPTIMIZE_GLOBAL_PATH[key] = {
+        "source": REC_PENDING_PATH[key]
+    }
 
 
 # (L2全局)需要跳过的特殊文件夹名称列表
@@ -86,36 +92,19 @@ L2_OPTIMIZE_RECHEME_SKIP_KEY = [
 
 ### L9 ###
 # (L9全局)路径
-L9_OPTIMIZE_GLOBAL_PATH = {
-    "AAA": {"source": REC_PENDING_PATH["AAA"], "target": REC_COMPLETE_PATH["AAA"]},
-    "PPP": {"source": REC_PENDING_PATH["PPP"], "target": REC_COMPLETE_PATH["PPP"]},
-}
+L9_OPTIMIZE_GLOBAL_PATH = {}
+for key in REC_PENDING_PATH:
+    if key in REC_COMPLETE_PATH:
+        L9_OPTIMIZE_GLOBAL_PATH[key] = {
+            "source": REC_PENDING_PATH[key],
+            "target": REC_COMPLETE_PATH[key]
+        }
 
 # (L9全局)是否启用移动文件夹
 L9_OPTIMIZE_GLOBAL_MOVE = True
 
 
 ### 主要操作 ###
-
-
-def L2_OPTIMIZE():
-    l2_main = L2_Main(
-        L2_OPTIMIZE_GLOBAL_PATH,
-        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
-        L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS,
-        L2_OPTIMIZE_RECHEME_SKIP_KEY,
-    )
-    l2_main.process()
-
-
-def L9_OPTIMIZE():
-    l9_main = L9_Main(
-        L9_OPTIMIZE_GLOBAL_PATH,
-        L9_OPTIMIZE_GLOBAL_MOVE,
-        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
-        L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS,
-    )
-    l9_main.process()
 
 
 def get_l2_folder(directory_path):
@@ -139,95 +128,62 @@ def get_l2_folder(directory_path):
         return []
 
 
-def statistics(L1_paths, total_L1, moved_L1, failed_L1, failed_names_L1, GLOBAL_GOTIFY_IP, GLOBAL_GOTIFY_TOKEN):
-    message = f"\n===== L1 统计 =====\n"
-    log_print("===== L1 统计 =====")
+def run_optimize():
+    """执行优化操作"""
+    log_print("[MAIN] 开始优化操作")
 
-    for folder_id in L1_paths.keys():
-        log_print(f"--- {folder_id} ---")
-        message += f"--- {folder_id} ---\n"
+    # L1 移动操作
+    log_print("[MAIN] 开始 L1 移动操作")
+    l1_stats = move_folders(
+        L1_OPTIMIZE_GLOBAL_PATH,
+        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
+        enable_move=L1_OPTIMIZE_GLOBAL_MOVE
+    )
 
-        source_path = L1_paths[folder_id]["source"]
-        target_path = L1_paths[folder_id]["target"]
-        processed = total_L1.get(folder_id, 0) - moved_L1.get(folder_id, 0) - failed_L1.get(folder_id, 0)
+    # L2 优化操作
+    log_print("[MAIN] 开始 L2 优化操作")
+    l2 = L2_Main(
+        L2_OPTIMIZE_GLOBAL_PATH,
+        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
+        L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS,
+        L2_OPTIMIZE_RECHEME_SKIP_KEY,
+        L2_OPTIMIZE_GLOBAL_MOVE=True
+    )
+    l2_stats = l2.process()
 
-        log_print(f"[统计] 源路径: {source_path}")
-        message += f"[统计] 源路径: {source_path}\n"
+    # L9 移动操作
+    log_print("[MAIN] 开始 L9 移动操作")
+    l9 = L9_Main(
+        L9_OPTIMIZE_GLOBAL_PATH,
+        L9_OPTIMIZE_GLOBAL_MOVE,
+        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
+        L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS,
+    )
+    l9_stats = l9.process()
 
-        log_print(f"[统计] 处理前: {total_L1.get(folder_id, 0)}, 处理后: {processed}")
-        message += f"[统计] 处理前: {total_L1.get(folder_id, 0)}, 处理后: {processed}\n"
-
-        log_print(f"[统计] 移动成功: {moved_L1.get(folder_id, 0)}, 移动失败: {failed_L1.get(folder_id, 0)}")
-        message += f"[统计] 移动成功: {moved_L1.get(folder_id, 0)}, 移动失败: {failed_L1.get(folder_id, 0)}\n"
-
-        failed_folders = ", ".join(failed_names_L1.get(folder_id, []))
-        log_print(f"[统计] 移动失败文件夹: {failed_folders}")
-        message += f"[统计] 移动失败文件夹: {failed_folders}\n"
-
-        log_print(f"[统计] 输出路径: {target_path}")
-        message += f"[统计] 输出路径: {target_path}\n"
-
-        try:
-            current_folders = [
-                folder for folder in os.listdir(target_path)
-                if os.path.isdir(os.path.join(target_path, folder))
-            ]
-            current_folders_str = ", ".join(current_folders)
-        except FileNotFoundError:
-            current_folders_str = "目标路径不存在"
-
-        log_print(f"[统计] 文件夹: {current_folders_str}")
-        message += f"[统计] 文件夹: {current_folders_str}\n"
-
-    # 推送统计信息到 Gotify
+    # 生成统计报告
+    report = "文件夹处理统计报告\n"
+    report += "==================\n"
+    report += format_statistics(l1_stats, "L1 移动统计")
+    report += format_statistics(l2_stats, "L2 合并统计")
+    report += format_statistics(l9_stats, "L9 移动统计")
+    
+    # 在控制台打印统计报告
+    log_print("\n" + report)
+    
+    # 推送统计信息
     try:
         asyncio.run(
             push_gotify(
                 GLOBAL_GOTIFY_IP,
                 GLOBAL_GOTIFY_TOKEN,
-                "[优化录播文件2.0] L1统计数据",
-                message,
-                priority=3,
+                "优化完成",
+                report,
+                priority=3
             )
         )
     except Exception as e:
         log_print(f"[Error] 推送统计信息失败: {e}")
-
-
-def run_optimize():
-    """
-    执行 L1、L2 和 L9 的操作，并生成统计信息。
-    """
-    # L1 移动操作
-    log_print("[MAIN] 开始 L1 移动操作")
-    total_folders_L1, moved_folders_L1, failed_folders_L1, failed_folder_names_L1 = move_folders(
-        L1_OPTIMIZE_GLOBAL_PATH,
-        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
-        enable_move=L1_OPTIMIZE_GLOBAL_MOVE
-    )
-    log_print("[MAIN] 完成 L1 移动操作")
-
-    # L2 优化操作
-    log_print("[MAIN] 开始 L2 优化操作")
-    L2_OPTIMIZE()
-    log_print("[MAIN] 完成 L2 优化操作")
-
-    # L9 移动操作
-    log_print("[MAIN] 开始 L9 移动操作")
-    L9_OPTIMIZE()
-    log_print("[MAIN] 完成 L9 移动操作")
-
-    # 统计信息
-    statistics(
-        L1_OPTIMIZE_GLOBAL_PATH,
-        total_folders_L1,
-        moved_folders_L1,
-        failed_folders_L1,
-        failed_folder_names_L1,
-        GLOBAL_GOTIFY_IP,
-        GLOBAL_GOTIFY_TOKEN,
-    )
-
 
 
 def task_scheduler():
