@@ -65,10 +65,7 @@ class Statistics:
 def format_statistics(stats, title):
     """格式化统计信息为易读的文本"""
     text = f"\n===== {title} =====\n"
-    text += f"总数: {stats.total}\n"
-    text += f"成功: {stats.success}\n"
-    text += f"失败: {stats.failed}\n"
-    text += f"跳过: {stats.skipped}\n"
+    text += f"总数: {stats.total} | 成功: {stats.success} | 失败: {stats.failed} | 跳过: {stats.skipped}\n"
     
     if stats.failed_names:
         text += "\n失败列表:\n"
@@ -77,9 +74,42 @@ def format_statistics(stats, title):
             
     if stats.skip_reasons:
         text += "\n跳过原因:\n"
-        for reason, names in stats.skip_reasons.items():
-            text += f"- {reason}: {len(names)} 个\n"
-            for name in names:
-                text += f"  * {name}\n"
+        
+        # 对于L9，按子文件夹数量分组优化显示
+        if "L9" in title:
+            # 收集所有子文件夹数量相关的原因
+            folder_count_users = []
+            other_reasons = {}
+            
+            for reason, names in stats.skip_reasons.items():
+                if not names:
+                    continue
+                    
+                if reason.startswith("子文件夹数量为"):
+                    folder_count = reason.split("子文件夹数量为")[1].strip()
+                    for name in names:
+                        folder_count_users.append(f"{name} ({folder_count})")
+                else:
+                    other_reasons[reason] = names
+            
+            # 显示其他原因
+            for reason, names in other_reasons.items():
+                text += f"- {reason}: {len(names)} 个\n"
+                text += ", ".join(names) + "\n"
+            
+            # 显示子文件夹数量用户（统一标题）
+            if folder_count_users:
+                # 按数量排序
+                folder_count_users.sort(key=lambda x: int(x.split('(')[1].split(')')[0]))
+                text += f"- 子文件夹数量大于 2 的用户: {len(folder_count_users)} 个\n"
+                text += ", ".join(folder_count_users) + "\n"
+        
+        else:
+            # 普通格式：用户名用逗号分隔，一行显示
+            for reason, names in stats.skip_reasons.items():
+                if not names:
+                    continue
+                text += f"- {reason}: {len(names)} 个\n"
+                text += ", ".join(names) + "\n"
                 
     return text 

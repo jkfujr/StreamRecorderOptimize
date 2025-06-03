@@ -6,191 +6,143 @@ import time
 import schedule
 from datetime import datetime
 
+from core.config import config
 from core.gotify import push_gotify
-from core.logs import log, log_print
-from core.L1_OPTIMIZE import move_folders
-from core.L2_OPTIMIZE import L2_Main
-from core.L9_OPTIMIZE import L9_Main
+from core.logs import log, log_print, create_optimize_log
+from core.OPTIMIZE.L1_OPTIMIZE_REC_MOVE import L1Processor
+from core.OPTIMIZE.L2_OPTIMIZE_FOLDER_MERGE import L2Processor
+from core.OPTIMIZE.L3_OPTIMIZE_TIME_MERGE import L3Processor
+from core.OPTIMIZE.L4_OPTIMIZE_CROSS_DAY import L4Processor
+from core.OPTIMIZE.L5_OPTIMIZE_ERROR_TIME import L5Processor
+from core.OPTIMIZE.L9_OPTIMIZE_FINAL_MOVE import L9Processor
 from core.statistics import format_statistics
 
 
 log()
 
-### 配置 ###
 
-# Gotify
-GLOBAL_GOTIFY_IP = "http://10.0.0.101:18101"
-GLOBAL_GOTIFY_TOKEN = "A43buC_qB8d8sfk"
-
-# 定时任务
-GLOBAL_TIMES = [
-    "00:00",
-    "02:00",
-    "04:00",
-    "06:00",
-    "08:00",
-    "10:00",
-    "12:00",
-    "14:00",
-    "16:00",
-    "18:00",
-    "20:00",
-]
-
-REC_PATH = {
-    "AAA": r"F:\Video\录播\综合",
-    "PPP": r"F:\Video\录播\P家",
-    "TTT": r"F:\Video\录播\测试",
-}
-
-REC_PENDING_PATH = {
-    "AAA": r"F:\Video\AAAAAAAAAA",
-    "PPP": r"F:\Video\PPPPPPPPPP",
-    "TTT": r"F:\Video\TTTTTTTTTT",
-}
-
-REC_COMPLETE_PATH = {
-    "AAA": r"F:\Video\AAAAAAAAAA\综合",
-    "PPP": r"F:\Video\PPPPPPPPPP\P家",
-    "TTT": r"F:\Video\PPPPPPPPPP\测试",
-}
-
-
-### L1 ###
-# (L1全局)路径
-L1_OPTIMIZE_GLOBAL_PATH = {}
-for key in REC_PATH:
-    L1_OPTIMIZE_GLOBAL_PATH[key] = {
-        "source": REC_PATH[key],
-        "target": REC_PENDING_PATH[key]
-    }
-
-# (L1全局)是否启用移动文件夹
-L1_OPTIMIZE_GLOBAL_MOVE = True
-# (L1全局)社团文件夹名称列表
-L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS = ["NIJISANJI", "HOLOLIVE", "VSPO"]
-
-### L2 ###
-# (L2全局)路径
-L2_OPTIMIZE_GLOBAL_PATH = {}
-for key in REC_PENDING_PATH:
-    L2_OPTIMIZE_GLOBAL_PATH[key] = {
-        "source": REC_PENDING_PATH[key]
-    }
-
-
-# (L2全局)需要跳过的特殊文件夹名称列表
-L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS = ["综合", "P家", "000", "111", "222", "333", "444"]
-# (L2录播姬)需要跳过的录播子文件夹
-L2_OPTIMIZE_RECHEME_SKIP_KEY = [
-    "【blrec-flv】",
-    "【blrec-hls】",
-    "000_部分丢失",
-    "1970",
-]
-
-
-### L9 ###
-# (L9全局)路径
-L9_OPTIMIZE_GLOBAL_PATH = {}
-for key in REC_PENDING_PATH:
-    if key in REC_COMPLETE_PATH:
-        L9_OPTIMIZE_GLOBAL_PATH[key] = {
-            "source": REC_PENDING_PATH[key],
-            "target": REC_COMPLETE_PATH[key]
-        }
-
-# (L9全局)是否启用移动文件夹
-L9_OPTIMIZE_GLOBAL_MOVE = True
-
-
-### 主要操作 ###
-
-
-def get_l2_folder(directory_path):
+def create_processors():
     """
-    获取指定目录下的所有子文件夹名称。
-
-    参数:
-        directory_path (str): 目录路径。
-
+    创建所有处理器实例 - 现在全部使用优化版本
+    
     返回:
-        list: 子文件夹名称列表。
+        dict: 处理器字典
     """
-    try:
-        return [
-            folder
-            for folder in os.listdir(directory_path)
-            if os.path.isdir(os.path.join(directory_path, folder))
-        ]
-    except FileNotFoundError:
-        log_print(f"[统计] 目录不存在: {directory_path}")
-        return []
+    processors = {}
+    
+    # L1处理器 - 文件移动
+    processors['L1'] = L1Processor(
+        path_config=config.get_l1_paths(),
+        social_folders=config.social_folders,
+        api_url=config.recording_url,
+        enable=config.l1_enable
+    )
+    
+    # L2处理器 - 文件夹合并
+    processors['L2'] = L2Processor(
+        path_config=config.get_l2_paths(),
+        social_folders=config.social_folders,
+        skip_folders=config.skip_folders,
+        recheme_skip_keys=config.recheme_skip_keys,
+        enable=config.l2_enable
+    )
+    
+    # L3处理器 - 时间合并
+    processors['L3'] = L3Processor(
+        path_config=config.get_l3_paths(),
+        skip_folders=config.skip_folders,
+        merge_interval=config.l3_merge_interval,
+        enable=config.l3_enable
+    )
+    
+    # L4处理器 - 跨天优化
+    processors['L4'] = L4Processor(
+        path_config=config.get_l4_paths(),
+        skip_folders=config.skip_folders,
+        merge_interval=config.l4_merge_interval,
+        start_hour=config.l4_cross_day_start_hour,
+        end_hour=config.l4_cross_day_end_hour,
+        enable=config.l4_enable
+    )
+    
+    # L5处理器 - 错误时间优化
+    processors['L5'] = L5Processor(
+        path_config=config.get_l5_paths(),
+        skip_folders=config.skip_folders,
+        error_pattern=config.l5_error_time_pattern,
+        enable=config.l5_enable
+    )
+    
+    # L9处理器 - 最终移动
+    processors['L9'] = L9Processor(
+        path_config=config.get_l9_paths(),
+        social_folders=config.social_folders,
+        skip_folders=config.skip_folders,
+        enable=config.l9_enable
+    )
+    
+    return processors
 
 
 def run_optimize():
     """执行优化操作"""
     log_print("[MAIN] 开始优化操作")
-
-    # L1 移动操作
-    log_print("[MAIN] 开始 L1 移动操作")
-    l1_stats = move_folders(
-        L1_OPTIMIZE_GLOBAL_PATH,
-        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
-        enable_move=L1_OPTIMIZE_GLOBAL_MOVE
-    )
-
-    # L2 优化操作
-    log_print("[MAIN] 开始 L2 优化操作")
-    l2 = L2_Main(
-        L2_OPTIMIZE_GLOBAL_PATH,
-        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
-        L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS,
-        L2_OPTIMIZE_RECHEME_SKIP_KEY,
-        L2_OPTIMIZE_GLOBAL_MOVE=True
-    )
-    l2_stats = l2.process()
-
-    # L9 移动操作
-    log_print("[MAIN] 开始 L9 移动操作")
-    l9 = L9_Main(
-        L9_OPTIMIZE_GLOBAL_PATH,
-        L9_OPTIMIZE_GLOBAL_MOVE,
-        L1_OPTIMIZE_GLOBAL_SOCIAL_FOLDERS,
-        L2_OPTIMIZE_GLOBAL_SKIP_FOLDERS,
-    )
-    l9_stats = l9.process()
-
-    # 生成统计报告
-    report = "文件夹处理统计报告\n"
-    report += "==================\n"
-    report += format_statistics(l1_stats, "L1 移动统计")
-    report += format_statistics(l2_stats, "L2 合并统计")
-    report += format_statistics(l9_stats, "L9 移动统计")
     
-    # 在控制台打印统计报告
-    log_print("\n" + report)
+    optimize_log_file = None
     
-    # 推送统计信息
-    try:
-        asyncio.run(
-            push_gotify(
-                GLOBAL_GOTIFY_IP,
-                GLOBAL_GOTIFY_TOKEN,
-                "优化完成",
-                report,
-                priority=3
+    # 使用独立的日志文件记录本次优化过程
+    with create_optimize_log() as log_file_path:
+        optimize_log_file = log_file_path
+        log_print(f"[MAIN] 优化日志保存到: {optimize_log_file}")
+        processors = create_processors()
+        results = {}
+        start_time = time.time()
+        
+        for name, processor in processors.items():
+            processor_start = time.time()
+            log_print(f"[MAIN] 开始 {name} 操作")
+            results[name] = processor.process()
+            processor_end = time.time()
+            log_print(f"[MAIN] {name} 操作完成，耗时: {processor_end - processor_start:.2f}秒")
+        
+        total_time = time.time() - start_time
+        log_print(f"[MAIN] 所有处理器执行完成，总耗时: {total_time:.2f}秒")
+        
+        # 生成统计报告
+        report = "文件夹处理统计报告\n"
+        report += "==================\n"
+        report += format_statistics(results['L1'], "L1 移动统计")
+        report += format_statistics(results['L2'], "L2 合并统计")
+        report += format_statistics(results['L3'], "L3 时间合并统计")
+        report += format_statistics(results['L4'], "L4 跨天优化统计")
+        report += format_statistics(results['L5'], "L5 错误时间优化统计")
+        report += format_statistics(results['L9'], "L9 移动统计")
+        
+        # 在控制台打印统计报告
+        log_print("\n" + report)
+        
+        # 推送统计信息
+        try:
+            asyncio.run(
+                push_gotify(
+                    config.gotify_ip,
+                    config.gotify_token,
+                    "优化完成",
+                    report,
+                    priority=3
+                )
             )
-        )
-    except Exception as e:
-        log_print(f"[Error] 推送统计信息失败: {e}")
+        except Exception as e:
+            log_print(f"[Error] 推送统计信息失败: {e}")
+    
+    log_print(f"[MAIN] 优化操作完成，详细日志已保存到: {optimize_log_file}")
 
 
 def task_scheduler():
     """
     定时任务
     """
-    for t in GLOBAL_TIMES:
+    for t in config.schedule_times:
         schedule.every().day.at(t).do(run_optimize)
 
     last_log_time = time.time()
@@ -214,8 +166,19 @@ def task_scheduler():
 
             last_log_time = time.time()
 
-
 if __name__ == "__main__":
     log_print("[MAIN] 程序开始运行")
+    log_print(f"[CONFIG] 加载配置完成")
+    log_print(f"[CONFIG] L1启用: {config.l1_enable}")
+    log_print(f"[CONFIG] L2启用: {config.l2_enable}")
+    log_print(f"[CONFIG] L3启用: {config.l3_enable}")
+    log_print(f"[CONFIG] L3合并时间间隔: {config.l3_merge_interval}秒")
+    log_print(f"[CONFIG] L4启用: {config.l4_enable}")
+    log_print(f"[CONFIG] L4跨天合并时间间隔: {config.l4_merge_interval}秒")
+    log_print(f"[CONFIG] L4跨天检测时间范围: {config.l4_cross_day_start_hour}:00 - 次日{config.l4_cross_day_end_hour}:00")
+    log_print(f"[CONFIG] L5启用: {config.l5_enable}")
+    # log_print(f"[CONFIG] L5错误时间模式: {config.l5_error_time_pattern}")
+    log_print(f"[CONFIG] L9启用: {config.l9_enable}")
+    
     run_optimize()
     task_scheduler()
