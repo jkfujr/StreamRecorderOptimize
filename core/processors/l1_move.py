@@ -2,9 +2,8 @@
 
 import os, requests, logging
 
-from ..move import move_folder, delete_empty_folders
-from ..statistics import Statistics
-from ..processors.folder_processor import FolderProcessor
+from core.engines import FileOperations
+from .folder import FolderProcessor
 
 def fetch_recording_status(api_url):
     """
@@ -81,7 +80,7 @@ class L1Processor(FolderProcessor):
         
         # 删除空文件夹
         try:
-            delete_empty_folders(source_path, self.recording_status)
+            FileOperations.cleanup_empty_folders_recursive(source_path, self.recording_status)
         except Exception as e:
             self._log_error(f"清理空文件夹失败: {e}")
     
@@ -92,10 +91,8 @@ class L1Processor(FolderProcessor):
         参数:
             folder_path (str): 文件夹路径
             folder_name (str): 文件夹名称
-            target_path (str): 目标路径
+            target_path (str): 目标路径（已经是完整路径）
         """
-        target_folder_path = os.path.join(target_path, folder_name)
-        
         # 检查是否在直播或录制中
         folder_status = self.recording_status.get(folder_name)
         
@@ -110,9 +107,19 @@ class L1Processor(FolderProcessor):
             self._log_debug(f"未找到用户 {folder_name} 的直播状态")
 
         try:
-            move_folder(folder_path, target_folder_path, enable_move=True)
-            self._log_debug(f"成功移动文件夹 {folder_name}")
-            self.stats.add_success()
+            # 使用增强的文件操作API，支持录制状态检查
+            success = FileOperations.move_folder_advanced(
+                folder_path, 
+                target_path, 
+                enable_move=True,
+                recording_status=self.recording_status
+            )
+            if success:
+                self._log_debug(f"成功移动文件夹 {folder_name}")
+                self.stats.add_success()
+            else:
+                self._log_error(f"移动文件夹 {folder_name} 失败")
+                self.stats.add_failed(folder_name, "文件操作返回失败")
         except Exception as e:
             self._log_error(f"移动文件夹 {folder_name} 失败: {e}")
             self.stats.add_failed(folder_name, str(e))

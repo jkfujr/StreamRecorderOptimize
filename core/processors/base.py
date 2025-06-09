@@ -3,7 +3,7 @@
 import logging
 from abc import ABC, abstractmethod
 
-from ..statistics import Statistics
+from core.reporting import Statistics
 
 
 class BaseProcessor(ABC):

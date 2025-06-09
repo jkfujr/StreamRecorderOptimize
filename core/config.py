@@ -50,7 +50,7 @@ class GlobalConfig:
             "l4_cross_day_start_hour": 22,  # 前一天开始检测的小时(22点后)
             "l4_cross_day_end_hour": 2,     # 次日结束检测的小时(2点前)
             # L5错误时间修复配置
-            "l5_error_time_pattern": "19700101-080000",  # 错误时间模式
+            "l5_error_time_pattern": "19700101-080000",
         }
         
         # 模块开关配置
@@ -61,6 +61,7 @@ class GlobalConfig:
             "l4_enable": True,   # L4跨天合并开关
             "l5_enable": True,   # L5错误时间修复开关
             "l9_enable": True,   # L9移动开关
+            "image_push_enable": False,  # 图片推送开关
         }
         
         # 定时任务配置
@@ -154,6 +155,10 @@ class GlobalConfig:
     @property
     def l9_enable(self):
         return self.module_switches["l9_enable"]
+        
+    @property
+    def image_push_enable(self):
+        return self.module_switches["image_push_enable"]
     
     # 定时配置访问器
     @property

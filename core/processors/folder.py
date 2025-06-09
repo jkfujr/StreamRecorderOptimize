@@ -3,7 +3,7 @@
 import os
 from abc import abstractmethod
 
-from .base_processor import BaseProcessor
+from .base import BaseProcessor
 
 
 class FolderProcessor(BaseProcessor):

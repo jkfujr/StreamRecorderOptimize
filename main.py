@@ -1,21 +1,16 @@
 # main.py
 
 import asyncio
-import os
 import time
 import schedule
 from datetime import datetime
 
 from core.config import config
-from core.gotify import push_gotify
 from core.logs import log, log_print, create_optimize_log
-from core.OPTIMIZE.L1_OPTIMIZE_REC_MOVE import L1Processor
-from core.OPTIMIZE.L2_OPTIMIZE_FOLDER_MERGE import L2Processor
-from core.OPTIMIZE.L3_OPTIMIZE_TIME_MERGE import L3Processor
-from core.OPTIMIZE.L4_OPTIMIZE_CROSS_DAY import L4Processor
-from core.OPTIMIZE.L5_OPTIMIZE_ERROR_TIME import L5Processor
-from core.OPTIMIZE.L9_OPTIMIZE_FINAL_MOVE import L9Processor
-from core.statistics import format_statistics
+from core.services.statistics_sender import send_statistics_with_image_to_gotify
+from core.reporting.formatter import ReportFormatter
+from core.processors import L1Processor, L2Processor, L3Processor, L4Processor, L5Processor, L9Processor
+from core.services import push_gotify
 
 
 log()
@@ -23,14 +18,14 @@ log()
 
 def create_processors():
     """
-    创建所有处理器实例 - 现在全部使用优化版本
+    创建所有处理器实例
     
     返回:
         dict: 处理器字典
     """
     processors = {}
     
-    # L1处理器 - 文件移动
+    # L1_文件移动
     processors['L1'] = L1Processor(
         path_config=config.get_l1_paths(),
         social_folders=config.social_folders,
@@ -38,7 +33,7 @@ def create_processors():
         enable=config.l1_enable
     )
     
-    # L2处理器 - 文件夹合并
+    # L2_文件夹合并
     processors['L2'] = L2Processor(
         path_config=config.get_l2_paths(),
         social_folders=config.social_folders,
@@ -47,7 +42,7 @@ def create_processors():
         enable=config.l2_enable
     )
     
-    # L3处理器 - 时间合并
+    # L3_时间合并
     processors['L3'] = L3Processor(
         path_config=config.get_l3_paths(),
         skip_folders=config.skip_folders,
@@ -55,7 +50,7 @@ def create_processors():
         enable=config.l3_enable
     )
     
-    # L4处理器 - 跨天优化
+    # L4_跨天优化
     processors['L4'] = L4Processor(
         path_config=config.get_l4_paths(),
         skip_folders=config.skip_folders,
@@ -65,7 +60,7 @@ def create_processors():
         enable=config.l4_enable
     )
     
-    # L5处理器 - 错误时间优化
+    # L5_错误时间优化
     processors['L5'] = L5Processor(
         path_config=config.get_l5_paths(),
         skip_folders=config.skip_folders,
@@ -73,7 +68,7 @@ def create_processors():
         enable=config.l5_enable
     )
     
-    # L9处理器 - 最终移动
+    # L9_最终移动
     processors['L9'] = L9Processor(
         path_config=config.get_l9_paths(),
         social_folders=config.social_folders,
@@ -84,7 +79,7 @@ def create_processors():
     return processors
 
 
-def run_optimize():
+async def run_optimize():
     """执行优化操作"""
     log_print("[MAIN] 开始优化操作")
     
@@ -109,29 +104,44 @@ def run_optimize():
         log_print(f"[MAIN] 所有处理器执行完成，总耗时: {total_time:.2f}秒")
         
         # 生成统计报告
-        report = "文件夹处理统计报告\n"
-        report += "==================\n"
-        report += format_statistics(results['L1'], "L1 移动统计")
-        report += format_statistics(results['L2'], "L2 合并统计")
-        report += format_statistics(results['L3'], "L3 时间合并统计")
-        report += format_statistics(results['L4'], "L4 跨天优化统计")
-        report += format_statistics(results['L5'], "L5 错误时间优化统计")
-        report += format_statistics(results['L9'], "L9 移动统计")
+        report = ReportFormatter.create_text_report(results)
         
         # 在控制台打印统计报告
         log_print("\n" + report)
         
-        # 推送统计信息
+        # 推送统计信息 - 优先尝试图片模式
         try:
-            asyncio.run(
-                push_gotify(
+            gotify_config = {
+                'ip': config.gotify_ip,
+                'token': config.gotify_token
+            }
+            
+            # 尝试发送带图片的报告
+            success = await send_statistics_with_image_to_gotify(
+                results, 
+                gotify_config, 
+                use_image=config.image_push_enable, 
+                use_base64=True
+            )
+            
+            if success:
+                mode = "图片模式" if config.image_push_enable else "文本模式"
+                log_print(f"[MAIN] 统计报告（{mode}）推送成功")
+            else:
+                if config.image_push_enable:
+                    log_print("[MAIN] 图片推送失败，降级为文本模式")
+                else:
+                    log_print("[MAIN] 文本推送失败")
+                # 降级为传统文本推送
+                await push_gotify(
                     config.gotify_ip,
                     config.gotify_token,
                     "优化完成",
                     report,
                     priority=3
                 )
-            )
+                log_print("[MAIN] 文本统计报告推送成功")
+                
         except Exception as e:
             log_print(f"[Error] 推送统计信息失败: {e}")
     
@@ -143,7 +153,7 @@ def task_scheduler():
     定时任务
     """
     for t in config.schedule_times:
-        schedule.every().day.at(t).do(run_optimize)
+        schedule.every().day.at(t).do(lambda: asyncio.run(run_optimize()))
 
     last_log_time = time.time()
     log_interval = 1800
@@ -179,6 +189,7 @@ if __name__ == "__main__":
     log_print(f"[CONFIG] L5启用: {config.l5_enable}")
     # log_print(f"[CONFIG] L5错误时间模式: {config.l5_error_time_pattern}")
     log_print(f"[CONFIG] L9启用: {config.l9_enable}")
+    log_print(f"[CONFIG] 图片推送启用: {config.image_push_enable}")
     
-    run_optimize()
+    asyncio.run(run_optimize())
     task_scheduler()
