@@ -181,19 +181,23 @@ class TimeInterval:
         
         参数:
             flv_time: 前一天文件夹的FLV修改时间
-            folder_time: 次日文件夹的创建时间
+            folder_time: 次日文件夹的FLV创建时间
             
         返回:
-            float: 跨天间隔秒数，如果不是跨天情况返回无穷大
+            float: 时间间隔秒数
         """
         from datetime import timedelta
         
-        # 检查是否为跨天情况
-        if folder_time.date() != flv_time.date() + timedelta(days=1):
-            return float('inf')
+        # 如果是同一天，直接计算时间差
+        if folder_time.date() == flv_time.date():
+            return (folder_time - flv_time).total_seconds()
         
-        # 计算跨天间隔：(午夜 - 前一天FLV时间) + (次日文件夹时间 - 午夜)
-        midnight = datetime.combine(flv_time.date() + timedelta(days=1), datetime.min.time())
-        interval_seconds = (midnight - flv_time).total_seconds() + (folder_time - midnight).total_seconds()
+        # 检查是否为跨天情况（次日）
+        if folder_time.date() == flv_time.date() + timedelta(days=1):
+            # 计算跨天间隔：(午夜 - 前一天FLV时间) + (次日文件夹时间 - 午夜)
+            midnight = datetime.combine(flv_time.date() + timedelta(days=1), datetime.min.time())
+            interval_seconds = (midnight - flv_time).total_seconds() + (folder_time - midnight).total_seconds()
+            return interval_seconds
         
-        return interval_seconds 
+        # 如果日期差距超过1天，返回无穷大
+        return float('inf')

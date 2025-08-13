@@ -113,18 +113,71 @@ class FlvFileManager:
     
     def get_flv_modification_time(self, folder_path: str) -> Optional[datetime]:
         """
-        获取FLV文件的修改时间
+        获取文件夹中按修改时间排序后最后一个FLV文件的修改时间
         
         参数:
             folder_path (str): 文件夹路径
             
         返回:
-            Optional[datetime]: FLV文件修改时间
+            Optional[datetime]: 最后一个FLV文件的修改时间
         """
-        flv_info = self.get_flv_info(folder_path)
-        if flv_info:
-            return flv_info.modification_time
-        return None
+        try:
+            if not os.path.exists(folder_path) or not os.path.isdir(folder_path):
+                return None
+            
+            # 查找所有FLV文件
+            flv_files = glob.glob(os.path.join(folder_path, "*.flv"))
+            
+            if not flv_files:
+                return None
+            
+            # 按修改时间排序，取最后一个（最新的）
+            flv_files.sort(key=lambda x: os.path.getmtime(x))
+            last_file = flv_files[-1]
+            
+            # 获取修改时间
+            modification_time = datetime.fromtimestamp(os.path.getmtime(last_file))
+            
+            logging.debug(f"[FlvManager] 找到最后一个FLV文件: {last_file}, 修改时间: {modification_time}")
+            return modification_time
+            
+        except Exception as e:
+            logging.error(f"[FlvManager] 获取最后一个FLV文件修改时间失败: {folder_path}, 错误: {e}")
+            return None
+    
+    def get_first_flv_creation_time(self, folder_path: str) -> Optional[datetime]:
+        """
+        获取文件夹中按创建时间排序后第一个FLV文件的创建时间
+        
+        参数:
+            folder_path (str): 文件夹路径
+            
+        返回:
+            Optional[datetime]: 第一个FLV文件的创建时间
+        """
+        try:
+            if not os.path.exists(folder_path) or not os.path.isdir(folder_path):
+                return None
+            
+            # 查找所有FLV文件
+            flv_files = glob.glob(os.path.join(folder_path, "*.flv"))
+            
+            if not flv_files:
+                return None
+            
+            # 按创建时间排序，取第一个（最早的）
+            flv_files.sort(key=lambda x: os.path.getctime(x))
+            first_file = flv_files[0]
+            
+            # 获取创建时间
+            creation_time = datetime.fromtimestamp(os.path.getctime(first_file))
+            
+            logging.debug(f"[FlvManager] 找到第一个FLV文件: {first_file}, 创建时间: {creation_time}")
+            return creation_time
+            
+        except Exception as e:
+            logging.error(f"[FlvManager] 获取第一个FLV文件创建时间失败: {folder_path}, 错误: {e}")
+            return None
     
     def has_flv_file(self, folder_path: str) -> bool:
         """
@@ -237,4 +290,4 @@ class FlvProcessor:
         返回:
             list: 不包含FLV文件的文件夹路径列表
         """
-        return [path for path in folder_paths if not self.flv_manager.has_flv_file(path)] 
+        return [path for path in folder_paths if not self.flv_manager.has_flv_file(path)]

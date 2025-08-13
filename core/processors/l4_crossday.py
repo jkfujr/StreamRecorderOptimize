@@ -14,16 +14,16 @@ class CrossDayMerger:
     跨天合并器，专门处理跨午夜的录播文件夹合并
     """
     
-    def __init__(self, merge_interval_seconds=60, start_hour=22, end_hour=2):
+    def __init__(self, merge_interval_seconds=60, start_hour=20, end_hour=4):
         self.merge_interval = merge_interval_seconds
-        self.start_hour = start_hour  # 前一天开始检测的小时
-        self.end_hour = end_hour      # 次日结束检测的小时
+        self.start_hour = start_hour  # 前一天开始检测的小时（默认晚上8点）
+        self.end_hour = end_hour      # 次日结束检测的小时（默认凌晨4点）
         self.merge_count = 0
     
     def is_cross_day_candidate(self, flv_time, folder_time):
         """
         判断FLV时间和文件夹时间是否为跨天候选
-        条件：FLV时间在前一天start_hour之后，文件夹时间在次日end_hour之前，且相邻日期
+        条件：FLV时间在前一天start_hour(20点)之后，文件夹时间在次日end_hour(4点)之前，且相邻日期
         """
         if folder_time.date() != flv_time.date() + timedelta(days=1):
             return False
@@ -36,9 +36,6 @@ class CrossDayMerger:
         计算跨天时间间隔（秒）
         使用TimeInterval的跨天计算方法
         """
-        if not self.is_cross_day_candidate(flv_time, folder_time):
-            return float('inf')  # 不是跨天候选，返回无穷大
-        
         return TimeInterval.calculate_cross_day_interval(flv_time, folder_time)
     
     def find_cross_day_pairs(self, folder_list, flv_manager):
@@ -71,15 +68,23 @@ class CrossDayMerger:
                 logging.debug(f"[L4] 文件夹缺少FLV文件，跳过: {os.path.basename(current_folder)} -> {os.path.basename(next_folder)}")
                 continue
             
-            # 使用当前文件夹的FLV修改时间与下一个文件夹的创建时间计算跨天间隔
-            cross_day_interval = self.calculate_cross_day_interval(current_flv_time, next_time)
+            # 使用当前文件夹最后一个FLV修改时间与下一个文件夹第一个FLV创建时间计算跨天间隔
+            next_flv_creation_time = flv_manager.get_first_flv_creation_time(next_folder)
+            if not next_flv_creation_time:
+                logging.debug(f"[L4] 下一个文件夹第一个FLV文件创建时间获取失败，跳过: {os.path.basename(current_folder)} -> {os.path.basename(next_folder)}")
+                continue
+            
+            cross_day_interval = self.calculate_cross_day_interval(current_flv_time, next_flv_creation_time)
+            
+            # 详细记录时间比较信息
+            logging.debug(f"[L4] 跨天时间分析: {os.path.basename(current_folder)} (最后FLV修改: {current_flv_time.strftime('%Y-%m-%d %H:%M:%S')}) -> {os.path.basename(next_folder)} (第一个FLV创建: {next_flv_creation_time.strftime('%Y-%m-%d %H:%M:%S')}) | 时间间隔: {cross_day_interval:.1f}秒 ({cross_day_interval/60:.1f}分钟)")
             
             # 检查跨天间隔是否在阈值内
             if cross_day_interval <= self.merge_interval:
                 cross_day_pairs.append((current_folder, next_folder))
-                logging.info(f"[L4] 发现跨天可合并对: {os.path.basename(current_folder)} <- {os.path.basename(next_folder)} (跨天间隔: {cross_day_interval:.1f}秒)")
+                logging.info(f"[L4] ✓ 发现跨天可合并对: {os.path.basename(current_folder)} <- {os.path.basename(next_folder)} | 间隔: {cross_day_interval:.1f}秒 ({cross_day_interval/60:.1f}分钟) ≤ 阈值: {self.merge_interval}秒")
             else:
-                logging.debug(f"[L4] 跨天间隔过大: {os.path.basename(current_folder)} -> {os.path.basename(next_folder)} (间隔: {cross_day_interval:.1f}秒 > {self.merge_interval}秒)")
+                logging.info(f"[L4] ✗ 跨天间隔超出阈值: {os.path.basename(current_folder)} -> {os.path.basename(next_folder)} | 间隔: {cross_day_interval:.1f}秒 ({cross_day_interval/60:.1f}分钟) > 阈值: {self.merge_interval}秒 ({self.merge_interval/60:.1f}分钟)")
         
         return cross_day_pairs
     
@@ -111,16 +116,17 @@ class L4Processor(FolderProcessor):
     专门检测和合并可配置时间范围内的连续录播。
     
     检测逻辑：
-    - 前一天文件夹的FLV修改时间 vs 次日文件夹的创建时间（从文件夹名解析）
-    - 例如：前一天23:50的FLV文件 vs 次日00:22的文件夹 = 32分钟间隔
+    - 前一天文件夹最后一个FLV修改时间 vs 次日文件夹第一个FLV创建时间
+    - 时间范围：前一天20:00之后 到 次日04:00之前的跨天录播
+    - 例如：前一天23:50的最后FLV文件 vs 次日00:22的第一个FLV文件 = 32分钟间隔
     
     使用示例：
-    文件夹A: 20250523-235053_【直播标题】 (FLV修改时间: 2025-05-23 23:58:25)
-    文件夹B: 20250524-002258_【直播标题】 (文件夹时间: 2025-05-24 00:22:58)
+    文件夹A: 20250523-235053_【直播标题】 (最后FLV修改时间: 2025-05-23 23:58:25)
+    文件夹B: 20250524-002258_【直播标题】 (第一个FLV创建时间: 2025-05-24 00:22:58)
     跨天间隔: (00:00:00 - 23:58:25) + (00:22:58 - 00:00:00) = 1分35秒 + 22分58秒 = 24分33秒
     """
     
-    def __init__(self, path_config, skip_folders, merge_interval, start_hour=22, end_hour=2, enable=True):
+    def __init__(self, path_config, skip_folders, merge_interval, start_hour=20, end_hour=4, enable=True):
         super().__init__(path_config, [], skip_folders, enable)
         self.merge_interval = merge_interval
         self.start_hour = start_hour
@@ -201,4 +207,4 @@ class L4Processor(FolderProcessor):
             logging.error(f"[L4] 处理用户文件夹 {user_folder_path} 跨天合并失败: {e}")
         finally:
             # 记录缓存统计信息
-            self.flv_manager.log_cache_stats() 
+            self.flv_manager.log_cache_stats()

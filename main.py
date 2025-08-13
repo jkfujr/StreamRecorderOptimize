@@ -11,6 +11,7 @@ from core.services.statistics_sender import send_statistics_with_image_to_gotify
 from core.reporting.formatter import ReportFormatter
 from core.processors import L1Processor, L2Processor, L3Processor, L4Processor, L5Processor, L9Processor
 from core.services import push_gotify
+from core.services.gotify import delete_application_messages
 
 
 log()
@@ -113,7 +114,7 @@ async def run_optimize():
         try:
             gotify_config = {
                 'ip': config.gotify_ip,
-                'token': config.gotify_token
+                'token': config.gotify_app_token
             }
             
             # 尝试发送带图片的报告
@@ -133,9 +134,19 @@ async def run_optimize():
                 else:
                     log_print("[MAIN] 文本推送失败")
                 # 降级为传统文本推送
+                # 先删除应用ID对应的所有消息
+                try:
+                    await delete_application_messages(
+                        config.gotify_ip,
+                        config.gotify_client_token,  # 使用Client Token删除消息
+                        config.gotify_app_id
+                    )
+                except Exception as delete_error:
+                    log_print(f"[MAIN] 删除旧消息失败: {delete_error}")
+                
                 await push_gotify(
                     config.gotify_ip,
-                    config.gotify_token,
+                    config.gotify_app_token,  # 使用Applications Token发送消息
                     "优化完成",
                     report,
                     priority=3

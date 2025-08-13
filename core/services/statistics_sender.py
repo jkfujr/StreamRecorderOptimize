@@ -8,6 +8,7 @@ import logging
 from typing import Dict, Any
 
 from ..reporting.formatter import ReportFormatter
+from ..config import config
 
 
 async def send_statistics_with_image_to_gotify(results: Dict[str, Any], gotify_config: Dict[str, str], 
@@ -17,7 +18,7 @@ async def send_statistics_with_image_to_gotify(results: Dict[str, Any], gotify_c
     
     参数：
         results: 处理器结果字典
-        gotify_config: Gotify配置 {'ip': '', 'token': ''}
+        gotify_config: Gotify配置 {'ip': '', 'token': ''} (使用gotify_app_token)
         use_image: 是否使用图片
         use_base64: 是否使用Base64嵌入图片
         
@@ -28,7 +29,7 @@ async def send_statistics_with_image_to_gotify(results: Dict[str, Any], gotify_c
         from .gotify import push_gotify
         
         if use_image:
-            # 生成带图片的报告 - 直接使用ReportFormatter
+            # 生成图片报告
             report_data = ReportFormatter.create_statistics_report_with_image(results, use_base64, 'PNG')
             if not report_data or not report_data.get('image_data'):
                 logging.debug("[StatsSender] 图片生成失败，切换到文本模式")
@@ -36,7 +37,6 @@ async def send_statistics_with_image_to_gotify(results: Dict[str, Any], gotify_c
             else:
                 logging.debug("[StatsSender] 图片报告生成成功，准备发送到Gotify")
                 
-                # 使用Markdown格式发送
                 extras = {
                     "client::display": {
                         "contentType": "text/markdown"
@@ -47,6 +47,17 @@ async def send_statistics_with_image_to_gotify(results: Dict[str, Any], gotify_c
                 logging.debug(f"[StatsSender] Markdown内容长度: {len(report_data['markdown_report'])} 字符")
                 
                 try:
+
+                    from .gotify import delete_application_messages
+                    try:
+                        await delete_application_messages(
+                            gotify_config['ip'],
+                            config.gotify_client_token,
+                            config.gotify_app_id
+                        )
+                    except Exception as delete_error:
+                        logging.warning(f"[StatsSender] 删除旧消息失败: {delete_error}")
+                    
                     success = await push_gotify(
                         gotify_config['ip'],
                         gotify_config['token'],
@@ -83,6 +94,16 @@ async def send_statistics_with_image_to_gotify(results: Dict[str, Any], gotify_c
             logging.debug(f"[StatsSender] 文本消息长度: {len(text_report)} 字符")
             
             try:
+                from .gotify import delete_application_messages
+                try:
+                    await delete_application_messages(
+                        gotify_config['ip'],
+                        config.gotify_client_token,
+                        config.gotify_app_id
+                    )
+                except Exception as delete_error:
+                    logging.warning(f"[StatsSender] 删除旧消息失败: {delete_error}")
+                
                 success = await push_gotify(
                     gotify_config['ip'],
                     gotify_config['token'],
@@ -107,7 +128,17 @@ async def send_statistics_with_image_to_gotify(results: Dict[str, Any], gotify_c
         
         # 尝试发送简单的完成通知
         try:
-            from .gotify import push_gotify
+            from .gotify import push_gotify, delete_application_messages
+            # 先删除应用ID对应的所有消息
+            try:
+                await delete_application_messages(
+                    gotify_config['ip'],
+                    config.gotify_client_token,
+                    config.gotify_app_id
+                )
+            except Exception as delete_error:
+                logging.warning(f"[StatsSender] 删除旧消息失败: {delete_error}")
+            
             await push_gotify(
                 gotify_config['ip'],
                 gotify_config['token'],
@@ -132,9 +163,17 @@ async def send_simple_statistics_to_gotify(results: Dict[str, Any], gotify_confi
         bool: 发送是否成功
     """
     try:
-        from .gotify import push_gotify
+        from .gotify import push_gotify, delete_application_messages
         
-        # 生成简单的文本报告
+        try:
+            await delete_application_messages(
+                gotify_config['ip'],
+                config.gotify_client_token,
+                config.gotify_app_id
+            )
+        except Exception as delete_error:
+            logging.warning(f"[StatsSender] 删除旧消息失败: {delete_error}")
+        
         text_report = ReportFormatter.create_simple_summary(results)
         
         success = await push_gotify(
@@ -154,4 +193,4 @@ async def send_simple_statistics_to_gotify(results: Dict[str, Any], gotify_confi
         
     except Exception as e:
         logging.error(f"[StatsSender] 简单统计发送异常: {e}")
-        return False 
+        return False

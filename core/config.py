@@ -11,7 +11,9 @@ class GlobalConfig:
         # API配置
         self.api_config = {
             "gotify_ip": "http://10.0.0.101:18101",
-            "gotify_token": "A43buC_qB8d8sfk", 
+            "gotify_app_token": "A43buC_qB8d8sfk",
+            "gotify_client_token": "C0UUs87HYog38ne",
+            "gotify_app_id": "5",
             "recording_url": "http://127.0.0.1:11111/api/room"
         }
         
@@ -47,8 +49,8 @@ class GlobalConfig:
             # L4跨天合并时间间隔(s)
             "l4_merge_interval": 60,
             # L4跨天检测时间范围
-            "l4_cross_day_start_hour": 22,  # 前一天开始检测的小时(22点后)
-            "l4_cross_day_end_hour": 2,     # 次日结束检测的小时(2点前)
+            "l4_cross_day_start_hour": 20,  # 前一天开始检测的小时(20点后)
+            "l4_cross_day_end_hour": 4,     # 次日结束检测的小时(4点前)
             # L5错误时间修复配置
             "l5_error_time_pattern": "19700101-080000",
         }
@@ -78,8 +80,19 @@ class GlobalConfig:
         return self.api_config["gotify_ip"]
         
     @property
-    def gotify_token(self):
-        return self.api_config["gotify_token"]
+    def gotify_app_token(self):
+        """获取Gotify Applications Token"""
+        return self.api_config["gotify_app_token"]
+        
+    @property
+    def gotify_client_token(self):
+        """获取Gotify Client Token"""
+        return self.api_config["gotify_client_token"]
+        
+    @property
+    def gotify_app_id(self):
+        """获取Gotify应用ID"""
+        return self.api_config["gotify_app_id"]
         
     @property
     def recording_url(self):
@@ -217,4 +230,4 @@ class GlobalConfig:
 
 
 # 全局配置实例
-config = GlobalConfig() 
+config = GlobalConfig()
