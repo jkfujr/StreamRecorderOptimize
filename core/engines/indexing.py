@@ -254,13 +254,27 @@ class ErrorTimeIndexer(BaseFolderIndexer):
         返回:
             Optional[FolderInfo]: 匹配的正常文件夹信息
         """
-        # 首先尝试精确日期匹配
+        # 首先尝试精确日期和标题匹配
         key = (error_folder.date.date(), error_folder.title)
         exact_match = self.normal_folders.get(key)
         if exact_match:
             return exact_match
         
-        # 如果精确匹配失败，尝试跨天匹配（匹配前一天的文件夹）
+        # 如果精确匹配失败，尝试基于FLV文件名的匹配
+        # 这解决了文件夹标题不同但FLV文件名相同的问题
+        error_flv_basename = self._extract_flv_basename(error_folder.path)
+        if error_flv_basename:
+            for (date, title), normal_folder in self.normal_folders.items():
+                # 检查日期是否在合理范围内（同一天或前一天）
+                date_diff = abs((error_folder.date.date() - date).days)
+                if date_diff <= 1:
+                    normal_flv_basename = self._extract_flv_basename(normal_folder.path)
+                    if normal_flv_basename and error_flv_basename == normal_flv_basename:
+                        logging.info(f"[ErrorTimeIndexer] 通过FLV文件名找到匹配文件夹: {error_folder.title} "
+                                   f"-> {normal_folder.title} (FLV: {error_flv_basename})")
+                        return normal_folder
+        
+        # 如果FLV匹配也失败，尝试跨天匹配（匹配前一天的文件夹）
         # 这种情况通常发生在跨午夜的直播中
         prev_day = error_folder.date.date() - timedelta(days=1)
         prev_day_key = (prev_day, error_folder.title)
@@ -275,6 +289,40 @@ class ErrorTimeIndexer(BaseFolderIndexer):
                 return prev_day_match
         
         return None
+    
+    def _extract_flv_basename(self, folder_path: str) -> Optional[str]:
+        """
+        从文件夹中的FLV文件名提取基础名称（标题部分）
+        
+        参数:
+            folder_path (str): 文件夹路径
+            
+        返回:
+            Optional[str]: FLV文件的基础名称（标题），如果提取失败返回None
+        """
+        try:
+            flv_info = self.flv_manager.get_flv_info(folder_path)
+            if not flv_info:
+                return None
+            
+            filename = flv_info.filename
+            # 移除.flv扩展名
+            if filename.endswith('.flv'):
+                filename = filename[:-4]
+            
+            # 尝试匹配格式：YYYYMMDD-HHMMSS-XXX_标题
+            import re
+            pattern = r'^\d{8}-\d{6}(?:-\d+)?_(.+)$'
+            match = re.match(pattern, filename)
+            if match:
+                return match.group(1)
+            
+            # 如果没有匹配到标准格式，返回整个文件名（去除扩展名）
+            return filename
+            
+        except Exception as e:
+            logging.error(f"[ErrorTimeIndexer] 提取FLV基础名称失败: {folder_path}, 错误: {e}")
+            return None
     
     def get_error_folders(self) -> List[FolderInfo]:
         """获取所有错误时间文件夹"""
@@ -302,4 +350,4 @@ class FolderIndexerFactory:
     @staticmethod
     def create_error_time_indexer(flv_manager: FlvFileManager) -> ErrorTimeIndexer:
         """创建错误时间索引器"""
-        return ErrorTimeIndexer(flv_manager) 
+        return ErrorTimeIndexer(flv_manager)
