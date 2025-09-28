@@ -197,12 +197,43 @@ class BlrecIndexer(BaseFolderIndexer):
 
 
 class ErrorTimeIndexer(BaseFolderIndexer):
-    """错误时间索引器（用于L5）"""
+    """错误时间索引器（用于L5）- 支持递归扫描"""
     
     def __init__(self, flv_manager: FlvFileManager):
         super().__init__(flv_manager)
         self.error_folders = []  # 错误时间文件夹
         self.normal_folders = {}  # {(date, title): FolderInfo}
+    
+    def _iterate_folders(self, folder_path: str) -> Iterator[FolderInfo]:
+        """
+        递归迭代文件夹并解析 - ErrorTimeIndexer专用版本
+        
+        参数:
+            folder_path (str): 文件夹路径
+            
+        生成:
+            FolderInfo: 解析成功的文件夹信息
+        """
+        try:
+            for folder_name in os.listdir(folder_path):
+                full_path = os.path.join(folder_path, folder_name)
+                
+                if not os.path.isdir(full_path):
+                    continue
+                
+                # 解析文件夹信息
+                folder_info = TimeParser.parse_folder_name(folder_name, full_path)
+                
+                if folder_info:
+                    yield folder_info
+                else:
+                    # 如果当前文件夹无法解析，递归查找子文件夹
+                    # 这是L5处理器的关键修复：支持social文件夹内的嵌套结构
+                    logging.debug(f"[ErrorTimeIndexer] 无法解析文件夹: {folder_name}，递归查找子文件夹")
+                    yield from self._iterate_folders(full_path)
+                    
+        except Exception as e:
+            logging.error(f"[ErrorTimeIndexer] 遍历文件夹失败: {folder_path}, 错误: {e}")
     
     def scan_and_index(self, folder_path: str) -> Dict[Any, List[FolderInfo]]:
         """
@@ -215,7 +246,7 @@ class ErrorTimeIndexer(BaseFolderIndexer):
             logging.warning(f"[ErrorTimeIndexer] 文件夹不存在: {folder_path}")
             return {}
         
-        logging.debug(f"[ErrorTimeIndexer] 开始扫描文件夹: {folder_path}")
+        logging.debug(f"[ErrorTimeIndexer] 开始递归扫描文件夹: {folder_path}")
         
         for folder_info in self._iterate_folders(folder_path):
             if TimeParser.is_error_time_format(folder_info.name):
@@ -230,12 +261,14 @@ class ErrorTimeIndexer(BaseFolderIndexer):
                         title=folder_info.title
                     )
                     self.error_folders.append(error_info)
+                    logging.debug(f"[ErrorTimeIndexer] 发现错误时间文件夹: {folder_info.path}")
             else:
                 # 正常文件夹
                 key = (folder_info.date.date(), folder_info.title)
                 self.normal_folders[key] = folder_info
+                logging.debug(f"[ErrorTimeIndexer] 发现正常文件夹: {folder_info.path}")
         
-        logging.debug(f"[ErrorTimeIndexer] 扫描完成，错误文件夹: {len(self.error_folders)}，"
+        logging.debug(f"[ErrorTimeIndexer] 递归扫描完成，错误文件夹: {len(self.error_folders)}，"
                      f"正常文件夹: {len(self.normal_folders)}")
         
         return {}  # 错误时间索引器不使用通用分组
